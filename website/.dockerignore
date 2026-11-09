@@ -1,0 +1,12 @@
+**
+!Dockerfile
+!requirements.txt
+!run.py
+!web/
+!web/*.py
+!config/
+!config/*.json
+!frontend/
+!frontend/index.html
+!frontend/app.js
+!frontend/styles.css

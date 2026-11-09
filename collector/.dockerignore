@@ -1,0 +1,10 @@
+**
+!Dockerfile
+!requirements.txt
+!run.py
+!engine/
+!engine/*.py
+!service/
+!service/*.py
+!config/
+!config/*.json

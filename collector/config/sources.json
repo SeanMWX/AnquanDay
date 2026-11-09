@@ -1,0 +1,157 @@
+[
+  {
+    "id": "freebuf",
+    "name": "FreeBuf",
+    "kind": "rss",
+    "url": "https://www.freebuf.com/feed",
+    "hosts": [
+      "www.freebuf.com",
+      "freebuf.com"
+    ],
+    "selectors": [
+      ".article-content",
+      ".content-detail"
+    ],
+    "language": "zh"
+  },
+  {
+    "id": "anwangxia",
+    "name": "暗网下",
+    "kind": "rss",
+    "url": "https://www.anwangxia.com/feed/",
+    "hosts": [
+      "www.anwangxia.com",
+      "anwangxia.com"
+    ],
+    "selectors": [
+      ".entry-content",
+      ".post-content"
+    ],
+    "language": "zh"
+  },
+  {
+    "id": "bleepingcomputer",
+    "name": "BleepingComputer",
+    "kind": "rss",
+    "url": "https://www.bleepingcomputer.com/feed/",
+    "hosts": [
+      "www.bleepingcomputer.com",
+      "bleepingcomputer.com"
+    ],
+    "selectors": [
+      ".articleBody"
+    ],
+    "language": "en",
+    "exclude_selectors": [
+      ".article-callout"
+    ]
+  },
+  {
+    "id": "thehackernews",
+    "name": "The Hacker News",
+    "kind": "rss",
+    "url": "https://feeds.feedburner.com/TheHackersNews",
+    "hosts": [
+      "feeds.feedburner.com",
+      "feedproxy.google.com",
+      "thehackernews.com",
+      "www.thehackernews.com"
+    ],
+    "selectors": [
+      "#articlebody",
+      ".articlebody"
+    ],
+    "language": "en"
+  },
+  {
+    "id": "securityweek",
+    "name": "SecurityWeek",
+    "kind": "rss",
+    "url": "https://www.securityweek.com/feed/",
+    "hosts": [
+      "www.securityweek.com",
+      "securityweek.com"
+    ],
+    "selectors": [
+      ".zox-post-body",
+      "#mvp-content-main",
+      ".entry-content"
+    ],
+    "language": "en"
+  },
+  {
+    "id": "krebs",
+    "name": "Krebs on Security",
+    "kind": "rss",
+    "url": "https://krebsonsecurity.com/feed/",
+    "hosts": [
+      "krebsonsecurity.com"
+    ],
+    "selectors": [
+      ".entry-content"
+    ],
+    "language": "en"
+  },
+  {
+    "id": "cert_eu",
+    "name": "CERT-EU",
+    "kind": "rss",
+    "url": "https://cert.europa.eu/publications/security-advisories-rss",
+    "hosts": [
+      "cert.europa.eu"
+    ],
+    "selectors": [
+      ".publication--body",
+      ".markdown-body",
+      "article",
+      "main"
+    ],
+    "language": "en"
+  },
+  {
+    "id": "seebug",
+    "name": "Seebug Paper",
+    "kind": "rss",
+    "url": "https://paper.seebug.org/rss/",
+    "hosts": [
+      "paper.seebug.org"
+    ],
+    "selectors": [
+      ".post-content",
+      ".article-content",
+      ".entry-content"
+    ],
+    "language": "zh"
+  },
+  {
+    "id": "anquanke",
+    "name": "安全客",
+    "kind": "rss",
+    "url": "https://api.anquanke.com/data/v1/rss",
+    "hosts": [
+      "api.anquanke.com",
+      "www.anquanke.com",
+      "anquanke.com"
+    ],
+    "selectors": [
+      "#js-article"
+    ],
+    "language": "zh",
+    "timezone_hint": "Asia/Shanghai",
+    "timezone_hint_status": "assumed_not_verified"
+  },
+  {
+    "id": "cisa_kev",
+    "name": "CISA KEV",
+    "kind": "kev",
+    "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+    "fallbacks": [
+      "https://raw.githubusercontent.com/cisagov/kev-data/develop/known_exploited_vulnerabilities.json"
+    ],
+    "hosts": [
+      "www.cisa.gov",
+      "raw.githubusercontent.com"
+    ],
+    "language": "en"
+  }
+]

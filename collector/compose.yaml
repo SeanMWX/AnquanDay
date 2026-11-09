@@ -1,0 +1,43 @@
+name: anquanday-collector
+
+services:
+  collector:
+    build:
+      context: .
+    image: anquanday-collector:local
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 45s
+    user: "${PUID:-1000}:${PGID:-1000}"
+    ports:
+      - "${COLLECTOR_BIND_IP:-0.0.0.0}:${COLLECTOR_PORT:-8765}:8765"
+    volumes:
+      - type: bind
+        source: ${COLLECTOR_DATA_DIR:-./data}
+        target: /app/data
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${COLLECTOR_CONFIG_DIR:-./config}
+        target: /app/config
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${COLLECTOR_ENV_FILE:-./.env}
+        target: /app/.env
+        read_only: true
+        bind:
+          create_host_path: false
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

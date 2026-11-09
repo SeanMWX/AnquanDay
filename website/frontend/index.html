@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>安全日报 · 每日安全新闻</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="topbar"><div class="topinner"><a class="brand" href="#" aria-label="安全日报收集概览"><span class="brand-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z" stroke="currentColor" stroke-width="1.5"/><path d="m8.5 12 2.4 2.4 4.6-5" stroke="#77d7bd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>安全<em>日报</em></span></a><div class="topnote"><span>每天一点，了解安全世界</span><span class="snapshot-tag">每日新闻</span></div></div></header>
+<main>
+<div class="collection-layout">
+<details class="calendar-card" open><summary>新闻日历</summary><div class="calendar-body">
+<div class="calendar-heading"><button id="month-previous" type="button" aria-label="上个月">←</button><strong id="calendar-month" aria-live="polite"></strong><button id="month-next" type="button" aria-label="下个月">→</button></div>
+<div class="calendar-week" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+<div id="calendar-grid" class="calendar-grid" role="group" aria-label="选择新闻日期"></div>
+<div class="calendar-footer"><button id="back-today" class="today-btn" type="button">回到今天</button><button id="undated" class="undated-btn" type="button" hidden>日期未确定</button></div>
+<p class="calendar-note" id="calendar-note"></p>
+</div></details>
+<div id="api-message" class="api-message" role="status" aria-live="polite">正在连接新闻服务…</div>
+<section class="workspace">
+<div class="tabs-wrap"><div id="source-tabs" class="tabs" role="tablist" aria-label="按新闻来源切换"></div></div>
+<div id="source-panel" role="tabpanel" aria-labelledby="tab-all">
+<div class="source-summary"><div class="source-row"><div><h2 id="source-title" class="source-title"></h2></div></div><details class="source-meta" id="source-meta"><summary>查看来源详情</summary><div id="source-grid" class="source-grid"></div></details></div>
+<div class="toolbar"><label class="searchbox"><span class="sr-only">搜索标题、CVE 或产品</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke-width="1.7"/><path d="m16 16 5 5" stroke-width="1.7"/></svg><input id="search" type="search" placeholder="搜索标题、CVE 或关键词…" autocomplete="off"></label><label><span class="sr-only">获取状态</span><select id="content-filter" class="control"><option value="all">全部获取状态</option><option value="article_body">已取得正文</option><option value="rss_excerpt">仅来源摘要</option><option value="title_only">仅标题 / 链接</option></select></label><label><span class="sr-only">排序方式</span><select id="sort" class="control"><option value="published">最新发布优先</option><option value="collected">最新采集优先</option></select></label><label class="zone-control"><span>显示时区</span><select id="timezone" class="control"><option value="Europe/Brussels">比利时</option><option value="Asia/Shanghai">北京时间</option><option value="UTC">协调世界时</option></select></label></div>
+<div class="results-note" id="results-note" aria-live="polite"></div>
+<div class="table-scroll" id="table-wrap"><table aria-label="收集记录"><thead id="table-head"></thead><tbody id="article-list"></tbody></table></div>
+<div class="empty" id="empty" hidden><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect x="10" y="7" width="28" height="34" rx="5" stroke-width="1.4"/><path d="M17 16h14M17 23h14M17 30h7" stroke-width="1.4" stroke-linecap="round"/></svg><h3 id="empty-title"></h3><p id="empty-description"></p></div>
+<div class="pagination"><span id="page-info"></span><div class="page-actions"><button id="previous" type="button">← 上一页</button><span id="page-number"></span><button id="next" type="button">下一页 →</button></div></div>
+</div>
+</section>
+</div>
+</main>
+<script src="/app.js" defer></script>
+</body>
+</html>

@@ -1,2 +1,92 @@
 # AnquanDay
-Website for Security News
+
+每日安全新闻：中文标题优先，展开对照原文，按日期和来源浏览。网站名称保留原名。
+
+## 两个文件夹，分别部署到两台服务器
+
+| 部署目录 | 服务器 | 包含内容 | 默认本地端口 |
+| --- | --- | --- | --- |
+| [website/](website/README.md) | 服务器 A | frontend/ 前端、web/ 网站后端、网站配置和依赖 | 8766 |
+| [collector/](collector/README.md) | 服务器 B | engine/、service/ API、自动翻译、SQLite、原文证据、GPT key | 8765 |
+
+浏览器访问服务器 A；网站后端通过 HTTP API 访问服务器 B。两边使用独立工作目录和配置，运行时不共享代码或数据库目录。
+
+完整仓库还包含 tests/、docs/ 和 scripts/，用于开发、验收与离线快照生成。部署时只复制对应的 website/ 或 collector/ 文件夹即可。
+
+## Docker：两台服务器分别启动
+
+两个目录各有自己的 Dockerfile、compose.yaml 和 .dockerignore，无需仓库根目录，也不需要共享 Docker 网络。
+
+1. 服务器 B 的 collector/：保留已有 .env（GPT key）和 data/；全新部署先复制 .env.example 为 .env 并创建 data/。执行 docker compose up -d --build，API 默认端口为 8765。
+2. 服务器 A 的 website/：从 .env.example 创建 .env，填写 COLLECTOR_API_BASE_URL=http://服务器B地址:8765。执行 docker compose up -d --build，网站默认端口为 8766。
+3. 浏览器访问 http://服务器A地址:8766 。
+
+容器自动执行原有采集、翻译流程，SQLite 数据持久化在 collector/data/；密钥只在运行时挂载。Linux 的数据目录权限、端口修改与更新命令见 [采集端 Docker 部署](collector/DOCKER.md) 和 [网站 Docker 部署](website/DOCKER.md)。本机 Python 采集服务与容器不能同时使用同一个 data/，切换前先停止旧服务。
+
+## 本地启动
+
+在仓库根目录，两个终端分别运行：
+
+~~~powershell
+# 终端 1：收集引擎、API、自动翻译
+python -m pip install -r collector/requirements.txt
+python collector/run.py
+~~~
+
+~~~powershell
+# 终端 2：网站前后端
+python -m pip install -r website/requirements.txt
+python website/run.py
+~~~
+
+打开 http://127.0.0.1:8766 。也可进入各自目录运行 python run.py，或分别运行 python -m service / python -m web。Ctrl+C 停止对应前台服务。以上 Python 启动方式需要进程持续运行；Docker 部署已配置 unless-stopped 重启策略。
+
+## 两台服务器如何连接
+
+1. 服务器 B：复制 collector/，安装该目录的 requirements.txt，把 config/service.json 的 api.host 设为 B 的可达内网 IP，启动 python run.py。
+2. 服务器 A：复制 website/，安装该目录的 requirements.txt，把 config/web.json 的 api_base_url 设为 http://服务器B地址:8765，并设置网站监听地址，启动 python run.py。
+3. 浏览器访问服务器 A 的网站端口。
+
+具体配置例子见 [网站部署说明](website/README.md) 和 [采集/API 部署说明](collector/README.md)。本地默认仍使用 127.0.0.1，不会因为目录调整扩大网络监听范围。
+
+## GPT key 和数据位置
+
+- 密钥：[collector/.env.example](collector/.env.example) 是模板，实际填写位置为 collector/.env。之前已经填写的 key 已移动到此处。
+- 数据库：collector/data/anquanday.sqlite3。
+- 自动采集与翻译：[collector/config/service.json](collector/config/service.json)。
+- 新闻来源：[collector/config/sources.json](collector/config/sources.json)。
+- 网站 API 地址和显示设置：[website/config/web.json](website/config/web.json)。
+
+.env 和 data/ 被 Git 忽略。迁移保留 144 篇新闻、159 个内容修订、1,772 条漏洞记录和 30 条译文。
+
+自动翻译默认只处理最新有新闻的一天（Europe/Brussels），每轮最多 20 条，每个 UTC 日最多 200 次尝试。中文原文不调用模型，已有译文复用缓存；标题改变后重新翻译。网站原名、链接和 CVE 编号保留。详情见 collector/README.md。
+
+## 验收与开发
+
+在完整仓库根目录运行：
+
+~~~powershell
+python -m pip install -r requirements-dev.txt
+python -m pytest -q tests
+~~~
+
+当前 77 项测试通过。测试覆盖采集与证据、时区、缓存和重试、独立来源、自动翻译、API、网站代理、容器环境配置，以及两个部署目录的隔离运行。Docker 已分别实际构建和启动验收，见 [Docker 验收记录](docs/docker-acceptance-2026-11-09.md)。
+
+旧离线 demo 可以在仓库根目录重新生成：
+
+~~~powershell
+python scripts/build_demo.py
+~~~
+
+输出为 website/frontend/demo.html；正常网站无需执行这条命令。
+
+## 当前边界
+
+现阶段翻译标题，不生成中文新闻摘要。尚未实现全站历史回填、跨来源事件自动合并或重大事件排序。来源访问限制仍存在，单个来源失败不会阻塞其他来源。
+
+- [来源测试](docs/source-tests-2026-11-09.md)
+- [事件去重与摘要设计](docs/engine-design.md)
+- [后端服务验收](docs/service-acceptance-2026-11-09.md)
+- [翻译验收](docs/translation-acceptance-2026-11-09.md)
+
+- [双目录部署验收](docs/deployment-split-2026-11-09.md)

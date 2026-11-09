@@ -1,0 +1,33 @@
+name: anquanday-website
+
+services:
+  website:
+    build:
+      context: .
+    image: anquanday-website:local
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 15s
+    environment:
+      ANQUANDAY_API_BASE_URL: ${COLLECTOR_API_BASE_URL:?请在 website/.env 填写采集服务器的 API 地址}
+    ports:
+      - "${WEBSITE_BIND_IP:-0.0.0.0}:${WEBSITE_PORT:-8766}:8766"
+    volumes:
+      - type: bind
+        source: ${WEBSITE_CONFIG_DIR:-./config}
+        target: /app/config
+        read_only: true
+        bind:
+          create_host_path: false
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

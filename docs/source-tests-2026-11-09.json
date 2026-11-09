@@ -1,0 +1,969 @@
+{
+  "generated_at": "2026-11-09T17:36:13.778Z",
+  "scope": "current_feed_window_and_full_kev_catalog_not_full_historical_archive",
+  "model_calls": 0,
+  "article_count": 140,
+  "body_count": 74,
+  "evidence_spans_checked": 2526,
+  "repeat_run": {
+    "new_articles": 0,
+    "updated_articles": 0,
+    "unchanged_articles": 140,
+    "kev": {
+      "baseline": 0,
+      "added": 0,
+      "updated": 0,
+      "unchanged": 1772,
+      "status": "ok",
+      "dateReleased": "2026-11-09T16:16:16.4275Z",
+      "count": 1772
+    }
+  },
+  "mirror_snapshot": {
+    "checked_at": "2026-11-09T17:12:47.244Z",
+    "primary_count": 1772,
+    "primary_dateReleased": "2026-11-09T16:16:16.4275Z",
+    "mirror_count": 1769,
+    "mirror_dateReleased": "2026-11-06T19:44:45.1797Z"
+  },
+  "sources": [
+    {
+      "source_id": "freebuf",
+      "source_name": "FreeBuf",
+      "started_at": "2026-11-09T17:31:19.365942Z",
+      "status": "failed",
+      "endpoint_attempts": [
+        {
+          "url": "https://www.freebuf.com/feed",
+          "error": "http_405"
+        }
+      ],
+      "new": 0,
+      "updated": 0,
+      "unchanged": 0,
+      "body_ok": 0,
+      "body_failed": 0,
+      "samples": [],
+      "error": "all_endpoints_failed",
+      "finished_at": "2026-11-09T17:31:20.019935Z",
+      "stored": null,
+      "failure_examples": []
+    },
+    {
+      "source_id": "anwangxia",
+      "source_name": "暗网下",
+      "started_at": "2026-11-09T17:31:20.021442Z",
+      "status": "ok",
+      "endpoint_attempts": [
+        {
+          "url": "https://www.anwangxia.com/feed/",
+          "status": 200,
+          "content_type": "application/rss+xml; charset=UTF-8",
+          "bytes": 89853,
+          "final_url": "https://www.anwangxia.com/feed"
+        }
+      ],
+      "new": 0,
+      "updated": 0,
+      "unchanged": 10,
+      "body_ok": 10,
+      "body_failed": 0,
+      "samples": [
+        {
+          "article_id": 1,
+          "title": "新西兰一男子因参与暗网税务与新冠疫情救济诈骗被判三年监禁",
+          "url": "https://www.anwangxia.com/5201.html",
+          "published": {
+            "precision": "second",
+            "raw": "Sun, 08 Nov 2026 03:04:00 +0000",
+            "source_timezone": "tzoffset('UTC', 0)",
+            "status": "explicit_timezone",
+            "utc": "2026-11-08T03:04:00Z"
+          },
+          "modified": {
+            "precision": "second",
+            "raw": "2026-11-09T13:40:39+00:00",
+            "source_timezone": "tzoffset('UTC', 0)",
+            "status": "explicit_timezone",
+            "utc": "2026-11-09T13:40:39Z"
+          },
+          "content_kind": "article_body",
+          "text_length": 1567,
+          "body_error": null,
+          "selector": ".entry-content",
+          "page_http_status": 200,
+          "change": "unchanged",
+          "outbound_links": 5
+        },
+        {
+          "article_id": 2,
+          "title": "门罗币已经悄然取代比特币，成为暗网首选加密货币",
+          "url": "https://www.anwangxia.com/5199.html",
+          "published": {
+            "precision": "second",
+            "raw": "Fri, 06 Nov 2026 04:11:00 +0000",
+            "source_timezone": "tzoffset('UTC', 0)",
+            "status": "explicit_timezone",
+            "utc": "2026-11-06T04:11:00Z"
+          },
+          "modified": {
+            "precision": "second",
+            "raw": "2026-11-09T13:54:38+00:00",
+            "source_timezone": "tzoffset('UTC', 0)",
+            "status": "explicit_timezone",
+            "utc": "2026-11-09T13:54:38Z"
+          },
+          "content_kind": "article_body",
+          "text_length": 2496,
+          "body_error": null,
+          "selector": ".entry-content",
+          "page_http_status": 200,
+          "change": "unchanged",
+          "outbound_links": 8
+        }
+      ],
+      "endpoint_used": "https://www.anwangxia.com/feed/",
+      "feed_fetch_id": 123,
+      "feed_entries": 10,
+      "feed_latest_published_utc": "2026-11-08T03:04:00Z",
+      "processed": 10,
+      "finished_at": "2026-11-09T17:31:21.827069Z",
+      "stored": {
+        "articles": 10,
+        "body": 10,
+        "excerpt": 0,
+        "title_only": 0
+      },
+      "failure_examples": []
+    },
+    {
+      "source_id": "bleepingcomputer",
+      "source_name": "BleepingComputer",
+      "started_at": "2026-11-09T17:31:21.829070Z",
+      "status": "ok",
+      "endpoint_attempts": [
+        {
+          "url": "https://www.bleepingcomputer.com/feed/",
+          "status": 304,
+          "content_type": "text/xml; charset=utf-8",
+          "bytes": 13188,
+          "final_url": "https://www.bleepingcomputer.com/feed/"
+        }
+      ],
+      "new": 0,
+      "updated": 0,
+      "unchanged": 15,
+      "body_ok": 15,
+      "body_failed": 0,
+      "samples": [
+        {
+          "article_id": 11,
+          "title": "Binance denies data breach after alleged ShinyHunters claims",
+          "url": "https://www.bleepingcomputer.com/news/security/binance-denies-data-breach-after-alleged-shinyhunters-claims/",
+          "published": {
+            "precision": "second",
+            "raw": "Mon, 09 Nov 2026 11:12:39 -0500",
+            "source_timezone": "tzoffset(None, -18000)",
+            "status": "explicit_timezone",
+            "utc": "2026-11-09T16:12:39Z"
+          },
+          "modified": {
+            "precision": "second",
+            "raw": "2026-11-09T11:12:39-05:00",
+            "source_timezone": "tzoffset(None, -18000)",
+            "status": "explicit_timezone",
+            "utc": "2026-11-09T16:12:39Z"
+          },
+          "content_kind": "article_body",
+          "text_length": 2933,
+          "body_error": null,
+          "selector": ".articleBody",
+          "page_http_status": 200,
+          "change": "unchanged",
+          "outbound_links": 10
+        },
+        {
+          "article_id": 12,
+          "title": "Hackers exploit SSHole OpenSSH flaw to breach Linux systems",
+          "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-sshole-openssh-flaw-to-breach-linux-systems/",
+          "published": {
+            "precision": "second",
+            "raw": "Mon, 09 Nov 2026 11:04:57 -0500",
+            "source_timezone": "tzoffset(None, -18000)",
+            "status": "explicit_timezone",
+            "utc": "2026-11-09T16:04:57Z"
+          },
+          "modified": {
+            "precision": "second",
+            "raw": "2026-11-09T11:04:58-05:00",
+            "source_timezone": "tzoffset(None, -18000)",
+            "status": "explicit_timezone",
+            "utc": "2026-11-09T16:04:58Z"
+          },
+          "content_kind": "article_body",
+          "text_length": 4218,
+          "body_error": null,
+          "selector": ".articleBody",
+          "page_http_status": 200,
+          "change": "unchanged",
+          "outbound_links": 9
+        }
+      ],
+      "endpoint_used": "https://www.bleepingcomputer.com/feed/",
+      "feed_fetch_id": 124,
+      "feed_entries": 15,
+      "feed_latest_published_utc": "2026-11-09T16:12:39Z",
+      "processed": 15,
+      "finished_at": "2026-11-09T17:31:22.107594Z",
+      "stored": {
+        "articles": 15,
+        "body": 15,
+        "excerpt": 0,
+        "title_only": 0
+      },
+      "failure_examples": []
+    },
+    {
+      "source_id": "thehackernews",
+      "source_name": "The Hacker News",
+      "started_at": "2026-11-09T17:31:22.109141Z",
+      "status": "partial",
+      "endpoint_attempts": [
+        {
+          "url": "https://feeds.feedburner.com/TheHackersNews",
+          "status": 200,
+          "content_type": "text/xml; charset=utf-8",
+          "bytes": 59573,
+          "final_url": "https://feeds.feedburner.com/TheHackersNews"
+        }
+      ],
+      "new": 0,
+      "updated": 0,
+      "unchanged": 50,
+      "body_ok": 0,
+      "body_failed": 50,
+      "samples": [
+        {
+          "article_id": 26,
+          "title": "Bitter Hackers Deploy New PapRAT Backdoor in Cyberespionage Campaign Targeting South Asia",
+          "url": "https://thehackernews.com/2026/11/bitter-hackers-deploy-new-paprat.html",
+          "published": {
+            "raw": "Mon, 09 Nov 2026 20:01:29 +0530",
+            "utc": "2026-11-09T14:31:29Z",
+            "precision": "second",
+            "status": "explicit_timezone",
+            "source_timezone": "tzoffset(None, 19800)"
+          },
+          "modified": {
+            "raw": null,
+            "utc": null,
+            "precision": null,
+            "status": "missing",
+            "source_timezone": null
+          },
+          "content_kind": "rss_excerpt",
+          "text_length": 392,
+          "body_error": "http_403",
+          "selector": null,
+          "page_http_status": null,
+          "change": "unchanged",
+          "outbound_links": 0
+        },
+        {
+          "article_id": 27,
+          "title": "⚡ Weekly Recap: SSHole Exploited, APT Root RCE, Robot Takeovers, 15K Hacked Sites, and More",
+          "url": "https://thehackernews.com/2026/11/weekly-recap-sshole-exploited-apt-root.html",
+          "published": {
+            "raw": "Mon, 09 Nov 2026 18:58:25 +0530",
+            "utc": "2026-11-09T13:28:25Z",
+            "precision": "second",
+            "status": "explicit_timezone",
+            "source_timezone": "tzoffset(None, 19800)"
+          },
+          "modified": {
+            "raw": null,
+            "utc": null,
+            "precision": null,
+            "status": "missing",
+            "source_timezone": null
+          },
+          "content_kind": "rss_excerpt",
+          "text_length": 391,
+          "body_error": "http_403",
+          "selector": null,
+          "page_http_status": null,
+          "change": "unchanged",
+          "outbound_links": 0
+        }
+      ],
+      "endpoint_used": "https://feeds.feedburner.com/TheHackersNews",
+      "feed_fetch_id": 125,
+      "feed_entries": 50,
+      "feed_latest_published_utc": "2026-11-09T14:31:29Z",
+      "processed": 50,
+      "finished_at": "2026-11-09T17:31:23.130140Z",
+      "stored": {
+        "articles": 50,
+        "body": 0,
+        "excerpt": 50,
+        "title_only": 0
+      },
+      "failure_examples": [
+        {
+          "article_id": 26,
+          "title": "Bitter Hackers Deploy New PapRAT Backdoor in Cyberespionage Campaign Targeting South Asia",
+          "url": "https://thehackernews.com/2026/11/bitter-hackers-deploy-new-paprat.html",
+          "published": {
+            "raw": "Mon, 09 Nov 2026 20:01:29 +0530",
+            "utc": "2026-11-09T14:31:29Z",
+            "precision": "second",
+            "status": "explicit_timezone",
+            "source_timezone": "tzoffset(None, 19800)"
+          },
+          "modified": {
+            "raw": null,
+            "utc": null,
+            "precision": null,
+            "status": "missing",
+            "source_timezone": null
+          },
+          "content_kind": "rss_excerpt",
+          "text_length": 392,
+          "body_error": "http_403",
+          "selector": null,
+          "page_http_status": null,
+          "change": "unchanged",
+          "outbound_links": 0
+        },
+        {
+          "article_id": 27,
+          "title": "⚡ Weekly Recap: SSHole Exploited, APT Root RCE, Robot Takeovers, 15K Hacked Sites, and More",
+          "url": "https://thehackernews.com/2026/11/weekly-recap-sshole-exploited-apt-root.html",
+          "published": {
+            "raw": "Mon, 09 Nov 2026 18:58:25 +0530",
+            "utc": "2026-11-09T13:28:25Z",
+            "precision": "second",
+            "status": "explicit_timezone",
+            "source_timezone": "tzoffset(None, 19800)"
+          },
+          "modified": {
+            "raw": null,
+            "utc": null,
+            "precision": null,
+            "status": "missing",
+            "source_timezone": null
+          },
+          "content_kind": "rss_excerpt",
+          "text_length": 391,
+          "body_error": "http_403",
+          "selector": null,
+          "page_http_status": null,
+          "change": "unchanged",
+          "outbound_links": 0
+        },
+        {
+          "article_id": 28,
+          "title": "Default 'admin:admin' Server Password Helps Researchers Hack Two Automakers, Unlock and Start Cars",
+          "url": "https://thehackernews.com/2026/11/default-adminadmin-server-password.html",
+          "published": {
+            "raw": "Mon, 09 Nov 2026 16:57:53 +0530",
+            "utc": "2026-11-09T11:27:53Z",
+            "precision": "second",
+            "status": "explicit_timezone",
+            "source_timezone": "tzoffset(None, 19800)"
+          },
+          "modified": {
+            "raw": null,
+            "utc": null,
+            "precision": null,
+            "status": "missing",
+            "source_timezone": null
+          },
+          "content_kind": "rss_excerpt",
+          "text_length": 387,
+          "body_error": "body_requests_paused_after_repeated_block",
+          "selector": null,
+          "page_http_status": null,
+          "change": "unchanged",
+          "outbound_links": 0
+        }
+      ]
+    },
+    {
+      "source_id": "securityweek",
+      "source_name": "SecurityWeek",
+      "started_at": "2026-11-09T17:31:23.132147Z",
+      "status": "ok",
+      "endpoint_attempts": [
+        {
+          "url": "https://www.securityweek.com/feed/",
+          "status": 304,
+          "content_type": "application/rss+xml; charset=UTF-8",
+          "bytes": 11873,
+          "final_url": "https://www.securityweek.com/feed/"
+        }
+      ],
+      "new": 0,
+      "updated": 0,
+      "unchanged": 10,
+      "body_ok": 10,
+      "body_failed": 0,
+      "samples": [
+        {
+          "article_id": 76,
+          "title": "Revolve Puts Data Breach Victim Count at 1.5 Million",
+          "url": "https://www.securityweek.com/revolve-puts-data-breach-victim-count-at-1-5-million/",
+          "published": {
+            "precision": "second",
+            "raw": "Mon, 09 Nov 2026 14:08:08 +0000",
+            "source_timezone": "tzoffset('UTC', 0)",
+            "status": "explicit_timezone",
+            "utc": "2026-11-09T14:08:08Z"
+          },
+          "modified": {
+            "precision": "second",
+            "raw": "2026-11-09T14:08:12+00:00",
+            "source_timezone": "tzoffset('UTC', 0)",
+            "status": "explicit_timezone",
+            "utc": "2026-11-09T14:08:12Z"
+          },
+          "content_kind": "article_body",
+          "text_length": 1577,
+          "body_error": null,
+          "selector": ".zox-post-body",
+          "page_http_status": 200,
+          "change": "unchanged",
+          "outbound_links": 6
+        },
+        {
+          "article_id": 77,
+          "title": "Plex2Shell Exploited Against QNAP NAS Users",
+          "url": "https://www.securityweek.com/plex2shell-exploited-against-qnap-nas-users/",
+          "published": {
+            "precision": "second",
+            "raw": "Mon, 09 Nov 2026 13:13:28 +0000",
+            "source_timezone": "tzoffset('UTC', 0)",
+            "status": "explicit_timezone",
+            "utc": "2026-11-09T13:13:28Z"
+          },
+          "modified": {
+            "precision": "second",
+            "raw": "2026-11-09T13:13:33+00:00",
+            "source_timezone": "tzoffset('UTC', 0)",
+            "status": "explicit_timezone",
+            "utc": "2026-11-09T13:13:33Z"
+          },
+          "content_kind": "article_body",
+          "text_length": 2279,
+          "body_error": null,
+          "selector": ".zox-post-body",
+          "page_http_status": 200,
+          "change": "unchanged",
+          "outbound_links": 9
+        }
+      ],
+      "endpoint_used": "https://www.securityweek.com/feed/",
+      "feed_fetch_id": 128,
+      "feed_entries": 10,
+      "feed_latest_published_utc": "2026-11-09T14:08:08Z",
+      "processed": 10,
+      "finished_at": "2026-11-09T17:31:23.463821Z",
+      "stored": {
+        "articles": 10,
+        "body": 10,
+        "excerpt": 0,
+        "title_only": 0
+      },
+      "failure_examples": []
+    },
+    {
+      "source_id": "krebs",
+      "source_name": "Krebs on Security",
+      "started_at": "2026-11-09T17:31:23.464438Z",
+      "status": "ok",
+      "endpoint_attempts": [
+        {
+          "url": "https://krebsonsecurity.com/feed/",
+          "status": 304,
+          "content_type": "application/rss+xml; charset=UTF-8",
+          "bytes": 141377,
+          "final_url": "https://krebsonsecurity.com/feed/"
+        }
+      ],
+      "new": 0,
+      "updated": 0,
+      "unchanged": 10,
+      "body_ok": 10,
+      "body_failed": 0,
+      "samples": [
+        {
+          "article_id": 86,
+          "title": "Want to Rent an Internet Address at the White House?",
+          "url": "https://krebsonsecurity.com/2026/11/want-to-rent-an-internet-address-at-the-white-house/",
+          "published": {
+            "precision": "second",
+            "raw": "Thu, 05 Nov 2026 04:36:17 +0000",
+            "source_timezone": "tzoffset('UTC', 0)",
+            "status": "explicit_timezone",
+            "utc": "2026-11-05T04:36:17Z"
+          },
+          "modified": {
+            "precision": null,
+            "raw": null,
+            "source_timezone": null,
+            "status": "missing",
+            "utc": null
+          },
+          "content_kind": "article_body",
+          "text_length": 4785,
+          "body_error": null,
+          "selector": ".entry-content",
+          "page_http_status": 200,
+          "change": "unchanged",
+          "outbound_links": 7
+        },
+        {
+          "article_id": 87,
+          "title": "Tech Firms Dismantle Botnet That Turned 1.3M TV Boxes Into Proxies",
+          "url": "https://krebsonsecurity.com/2026/11/tech-firms-dismantle-botnet-that-turned-1-3m-tv-boxes-into-proxies/",
+          "published": {
+            "precision": "second",
+            "raw": "Tue, 03 Nov 2026 02:24:31 +0000",
+            "source_timezone": "tzoffset('UTC', 0)",
+            "status": "explicit_timezone",
+            "utc": "2026-11-03T02:24:31Z"
+          },
+          "modified": {
+            "precision": null,
+            "raw": null,
+            "source_timezone": null,
+            "status": "missing",
+            "utc": null
+          },
+          "content_kind": "article_body",
+          "text_length": 8284,
+          "body_error": null,
+          "selector": ".entry-content",
+          "page_http_status": 200,
+          "change": "unchanged",
+          "outbound_links": 13
+        }
+      ],
+      "endpoint_used": "https://krebsonsecurity.com/feed/",
+      "feed_fetch_id": 129,
+      "feed_entries": 10,
+      "feed_latest_published_utc": "2026-11-05T04:36:17Z",
+      "processed": 10,
+      "finished_at": "2026-11-09T17:31:23.905767Z",
+      "stored": {
+        "articles": 10,
+        "body": 10,
+        "excerpt": 0,
+        "title_only": 0
+      },
+      "failure_examples": []
+    },
+    {
+      "source_id": "cert_eu",
+      "source_name": "CERT-EU",
+      "started_at": "2026-11-09T17:31:23.907767Z",
+      "status": "ok",
+      "endpoint_attempts": [
+        {
+          "url": "https://cert.europa.eu/publications/security-advisories-rss",
+          "status": 200,
+          "content_type": "text/xml; charset=utf-8",
+          "bytes": 10179,
+          "final_url": "https://cert.europa.eu/publications/security-advisories-rss"
+        }
+      ],
+      "new": 0,
+      "updated": 0,
+      "unchanged": 10,
+      "body_ok": 10,
+      "body_failed": 0,
+      "samples": [
+        {
+          "article_id": 96,
+          "title": "2026-018: Critical Vulnerabilities in PHP",
+          "url": "https://cert.europa.eu/publications/security-advisories/2026-018/",
+          "published": {
+            "precision": "second",
+            "raw": "Fri, 23 Oct 2026 16:36:26 CEST",
+            "source_timezone": "tzoffset('CEST', 7200)",
+            "status": "explicit_timezone",
+            "utc": "2026-10-23T14:36:26Z"
+          },
+          "modified": {
+            "precision": null,
+            "raw": null,
+            "source_timezone": null,
+            "status": "missing",
+            "utc": null
+          },
+          "content_kind": "article_body",
+          "text_length": 7044,
+          "body_error": null,
+          "selector": ".publication--body",
+          "page_http_status": 200,
+          "change": "unchanged",
+          "outbound_links": 8
+        },
+        {
+          "article_id": 97,
+          "title": "2026-019: Critical Vulnerability in GitLab Community and Enterprise Editions",
+          "url": "https://cert.europa.eu/publications/security-advisories/2026-019/",
+          "published": {
+            "precision": "second",
+            "raw": "Thu, 22 Oct 2026 11:14:22 CEST",
+            "source_timezone": "tzoffset('CEST', 7200)",
+            "status": "explicit_timezone",
+            "utc": "2026-10-22T09:14:22Z"
+          },
+          "modified": {
+            "precision": null,
+            "raw": null,
+            "source_timezone": null,
+            "status": "missing",
+            "utc": null
+          },
+          "content_kind": "article_body",
+          "text_length": 1784,
+          "body_error": null,
+          "selector": ".publication--body",
+          "page_http_status": 200,
+          "change": "unchanged",
+          "outbound_links": 3
+        }
+      ],
+      "endpoint_used": "https://cert.europa.eu/publications/security-advisories-rss",
+      "feed_fetch_id": 130,
+      "feed_entries": 10,
+      "feed_latest_published_utc": "2026-10-23T14:36:26Z",
+      "processed": 10,
+      "finished_at": "2026-11-09T17:31:24.206224Z",
+      "stored": {
+        "articles": 10,
+        "body": 10,
+        "excerpt": 0,
+        "title_only": 0
+      },
+      "failure_examples": []
+    },
+    {
+      "source_id": "seebug",
+      "source_name": "Seebug Paper",
+      "started_at": "2026-11-09T17:31:24.208226Z",
+      "status": "partial",
+      "endpoint_attempts": [
+        {
+          "url": "https://paper.seebug.org/rss/",
+          "status": 200,
+          "content_type": "application/xml; charset=utf-8",
+          "bytes": 12271,
+          "final_url": "https://paper.seebug.org/rss"
+        }
+      ],
+      "new": 0,
+      "updated": 0,
+      "unchanged": 15,
+      "body_ok": 0,
+      "body_failed": 15,
+      "samples": [
+        {
+          "article_id": 106,
+          "title": "说同样的话，做不同的事：诊断与引导推理型 VLA 中的文本—动作背离",
+          "url": "https://paper.seebug.org/3532",
+          "published": {
+            "raw": "Thu, 05 Nov 2026 17:08:06 +0800",
+            "utc": "2026-11-05T09:08:06Z",
+            "precision": "second",
+            "status": "explicit_timezone",
+            "source_timezone": "tzoffset(None, 28800)"
+          },
+          "modified": {
+            "raw": null,
+            "utc": null,
+            "precision": null,
+            "status": "missing",
+            "source_timezone": null
+          },
+          "content_kind": "rss_excerpt",
+          "text_length": 203,
+          "body_error": "http_521",
+          "selector": null,
+          "page_http_status": null,
+          "change": "unchanged",
+          "outbound_links": 0
+        },
+        {
+          "article_id": 107,
+          "title": "基于证据锚定的大语言模型辅助 Android 移动取证报告",
+          "url": "https://paper.seebug.org/3531",
+          "published": {
+            "raw": "Fri, 30 Oct 2026 17:29:32 +0800",
+            "utc": "2026-10-30T09:29:32Z",
+            "precision": "second",
+            "status": "explicit_timezone",
+            "source_timezone": "tzoffset(None, 28800)"
+          },
+          "modified": {
+            "raw": null,
+            "utc": null,
+            "precision": null,
+            "status": "missing",
+            "source_timezone": null
+          },
+          "content_kind": "rss_excerpt",
+          "text_length": 203,
+          "body_error": "http_521",
+          "selector": null,
+          "page_http_status": null,
+          "change": "unchanged",
+          "outbound_links": 0
+        }
+      ],
+      "endpoint_used": "https://paper.seebug.org/rss/",
+      "feed_fetch_id": 131,
+      "feed_entries": 15,
+      "feed_latest_published_utc": "2026-11-05T09:08:06Z",
+      "processed": 15,
+      "finished_at": "2026-11-09T17:31:26.365703Z",
+      "stored": {
+        "articles": 15,
+        "body": 0,
+        "excerpt": 15,
+        "title_only": 0
+      },
+      "failure_examples": [
+        {
+          "article_id": 106,
+          "title": "说同样的话，做不同的事：诊断与引导推理型 VLA 中的文本—动作背离",
+          "url": "https://paper.seebug.org/3532",
+          "published": {
+            "raw": "Thu, 05 Nov 2026 17:08:06 +0800",
+            "utc": "2026-11-05T09:08:06Z",
+            "precision": "second",
+            "status": "explicit_timezone",
+            "source_timezone": "tzoffset(None, 28800)"
+          },
+          "modified": {
+            "raw": null,
+            "utc": null,
+            "precision": null,
+            "status": "missing",
+            "source_timezone": null
+          },
+          "content_kind": "rss_excerpt",
+          "text_length": 203,
+          "body_error": "http_521",
+          "selector": null,
+          "page_http_status": null,
+          "change": "unchanged",
+          "outbound_links": 0
+        },
+        {
+          "article_id": 107,
+          "title": "基于证据锚定的大语言模型辅助 Android 移动取证报告",
+          "url": "https://paper.seebug.org/3531",
+          "published": {
+            "raw": "Fri, 30 Oct 2026 17:29:32 +0800",
+            "utc": "2026-10-30T09:29:32Z",
+            "precision": "second",
+            "status": "explicit_timezone",
+            "source_timezone": "tzoffset(None, 28800)"
+          },
+          "modified": {
+            "raw": null,
+            "utc": null,
+            "precision": null,
+            "status": "missing",
+            "source_timezone": null
+          },
+          "content_kind": "rss_excerpt",
+          "text_length": 203,
+          "body_error": "http_521",
+          "selector": null,
+          "page_http_status": null,
+          "change": "unchanged",
+          "outbound_links": 0
+        },
+        {
+          "article_id": 108,
+          "title": "攻击者离场之后：面向 LLM 智能体的跨会话残留攻击基准评测",
+          "url": "https://paper.seebug.org/3530",
+          "published": {
+            "raw": "Wed, 28 Oct 2026 17:23:26 +0800",
+            "utc": "2026-10-28T09:23:26Z",
+            "precision": "second",
+            "status": "explicit_timezone",
+            "source_timezone": "tzoffset(None, 28800)"
+          },
+          "modified": {
+            "raw": null,
+            "utc": null,
+            "precision": null,
+            "status": "missing",
+            "source_timezone": null
+          },
+          "content_kind": "rss_excerpt",
+          "text_length": 203,
+          "body_error": "body_requests_paused_after_repeated_block",
+          "selector": null,
+          "page_http_status": null,
+          "change": "unchanged",
+          "outbound_links": 0
+        }
+      ]
+    },
+    {
+      "source_id": "anquanke",
+      "source_name": "安全客",
+      "started_at": "2026-11-09T17:31:26.368211Z",
+      "status": "partial",
+      "endpoint_attempts": [
+        {
+          "url": "https://api.anquanke.com/data/v1/rss",
+          "status": 200,
+          "content_type": "application/xml",
+          "bytes": 5822,
+          "final_url": "https://api.anquanke.com/data/v1/rss"
+        }
+      ],
+      "new": 0,
+      "updated": 0,
+      "unchanged": 20,
+      "body_ok": 19,
+      "body_failed": 1,
+      "samples": [
+        {
+          "article_id": 121,
+          "title": "《失守》系列 | 6分钟，看一个人是怎么把自己交出去的",
+          "url": "https://www.anquanke.com/post/id/316450",
+          "published": {
+            "precision": "second",
+            "raw": "2026-11-09 14:59:16",
+            "source_timezone": "Asia/Shanghai",
+            "status": "source_timezone_assumed",
+            "utc": "2026-11-09T06:59:16Z"
+          },
+          "modified": {
+            "precision": null,
+            "raw": null,
+            "source_timezone": null,
+            "status": "missing",
+            "utc": null
+          },
+          "content_kind": "article_body",
+          "text_length": 503,
+          "body_error": null,
+          "selector": "#js-article",
+          "page_http_status": 200,
+          "change": "unchanged",
+          "outbound_links": 0
+        },
+        {
+          "article_id": 122,
+          "title": "杀毒软件成了后门：cPGuard更新通道被投毒",
+          "url": "https://www.anquanke.com/post/id/316452",
+          "published": {
+            "precision": "second",
+            "raw": "2026-11-09 14:58:22",
+            "source_timezone": "Asia/Shanghai",
+            "status": "source_timezone_assumed",
+            "utc": "2026-11-09T06:58:22Z"
+          },
+          "modified": {
+            "precision": null,
+            "raw": null,
+            "source_timezone": null,
+            "status": "missing",
+            "utc": null
+          },
+          "content_kind": "article_body",
+          "text_length": 3151,
+          "body_error": null,
+          "selector": "#js-article",
+          "page_http_status": 200,
+          "change": "unchanged",
+          "outbound_links": 0
+        }
+      ],
+      "endpoint_used": "https://api.anquanke.com/data/v1/rss",
+      "feed_fetch_id": 134,
+      "feed_entries": 20,
+      "feed_latest_published_utc": "2026-11-09T06:59:16Z",
+      "processed": 20,
+      "finished_at": "2026-11-09T17:31:31.033517Z",
+      "stored": {
+        "articles": 20,
+        "body": 19,
+        "excerpt": 0,
+        "title_only": 1
+      },
+      "failure_examples": [
+        {
+          "article_id": 133,
+          "title": "【开放申请】企业可自查PHP2Shell漏洞了！",
+          "url": "https://www.anquanke.com/post/id/316392",
+          "published": {
+            "raw": "2026-10-30 18:19:15",
+            "utc": "2026-10-30T10:19:15Z",
+            "precision": "second",
+            "status": "source_timezone_assumed",
+            "source_timezone": "Asia/Shanghai"
+          },
+          "modified": {
+            "raw": null,
+            "utc": null,
+            "precision": null,
+            "status": "missing",
+            "source_timezone": null
+          },
+          "content_kind": "title_only",
+          "text_length": 0,
+          "body_error": "body_selector_missing_or_too_short",
+          "selector": "#js-article",
+          "page_http_status": 200,
+          "change": "unchanged",
+          "outbound_links": 0
+        }
+      ]
+    },
+    {
+      "source_id": "cisa_kev",
+      "source_name": "CISA KEV",
+      "started_at": "2026-11-09T17:31:31.036044Z",
+      "status": "ok",
+      "endpoint_attempts": [
+        {
+          "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+          "status": 304,
+          "content_type": "application/json",
+          "bytes": 1838193,
+          "final_url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
+        }
+      ],
+      "new": 0,
+      "updated": 0,
+      "unchanged": 0,
+      "body_ok": 0,
+      "body_failed": 0,
+      "samples": [],
+      "endpoint_used": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+      "feed_fetch_id": 136,
+      "catalog": {
+        "baseline": 0,
+        "added": 0,
+        "updated": 0,
+        "unchanged": 1772,
+        "status": "ok",
+        "dateReleased": "2026-11-09T16:16:16.4275Z",
+        "count": 1772
+      },
+      "finished_at": "2026-11-09T17:31:31.447156Z",
+      "stored": null,
+      "failure_examples": []
+    }
+  ]
+}
