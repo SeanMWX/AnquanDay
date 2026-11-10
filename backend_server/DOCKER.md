@@ -7,6 +7,11 @@
 1. 安装并启动 Docker 与 Compose v2。
 2. 将 .env.example 复制为 .env（已有 .env 则直接编辑），填写服务器 B 的实际地址：
 
+~~~sh
+# 在 backend_server/ 内执行；-n 保留已有 .env。
+cp -n .env.example .env
+~~~
+
 ~~~dotenv
 COLLECTOR_API_BASE_URL=http://10.0.0.20:8765
 WEBSITE_PORT=8766

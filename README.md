@@ -19,7 +19,7 @@
 
 两个目录各有自己的 Dockerfile、compose.yaml 和 .dockerignore，无需仓库根目录，也不需要共享 Docker 网络。
 
-1. 服务器 B 的 anquanday_auto/：保留已有 .env（GPT key）和 data/；全新部署先复制 .env.example 为 .env 并创建 data/。执行 docker compose up -d --build，API 默认端口为 8765。
+1. 服务器 B 的 anquanday_auto/：保留已有 .env（GPT key）和 data/；全新部署先复制 .env.example 为 .env 并填写。仓库通过 data/.gitkeep 提供默认数据目录；Linux 上还需确认容器用户对它有写权限。执行 docker compose up -d --build，API 默认端口为 8765。
 2. 服务器 A 的 backend_server/：从 .env.example 创建 .env，填写 COLLECTOR_API_BASE_URL=http://服务器B地址:8765。执行 docker compose up -d --build，网站默认端口为 8766。
 3. 浏览器访问 http://服务器A地址:8766 。
 
@@ -59,7 +59,7 @@ python backend_server/run.py
 - 新闻来源：[anquanday_auto/config/sources.json](anquanday_auto/config/sources.json)。
 - 网站 API 地址和显示设置：[backend_server/config/web.json](backend_server/config/web.json)。
 
-.env、.env.*（示例模板除外）、data/、SQLite 数据库及其伴随文件、日志、缓存、虚拟环境和本地配置副本均被 Git 忽略。密钥只填写在 .env；仓库中的默认 JSON 配置不应填写密钥。
+.env、.env.*（示例模板除外）、data/ 内的运行数据、SQLite 数据库及其伴随文件、日志、缓存、虚拟环境和本地配置副本均被 Git 忽略。仅 anquanday_auto/data/.gitkeep 作为目录占位文件提交，确保全新拉取代码后 Docker 的默认数据挂载目录存在。密钥只填写在 .env；仓库中的默认 JSON 配置不应填写密钥。
 
 截图统一保存在 docs/screenshots/，其他本地验收产物放在 docs/local-artifacts/；这两个目录不会提交。旧的 *-preview 图片和自动翻译截图也已加入忽略规则。正式网页使用的图片资源仍可正常纳入版本控制。
 

@@ -29,6 +29,10 @@ docker-compose.override.yml
 # Runtime collection data, downloaded evidence, translations and MITRE updates.
 # Keep anquanday_auto/config/apt_catalog.json and ATTACK-LICENSE.txt: deployment seeds.
 data/
+# Keep only the empty deployment directory, never its runtime contents.
+!/anquanday_auto/data/
+/anquanday_auto/data/*
+!/anquanday_auto/data/.gitkeep
 *.db
 *.db-*
 *.sqlite

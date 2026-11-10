@@ -5,7 +5,16 @@
 ## 首次部署
 
 1. 安装并启动 Docker Engine / Docker Desktop 与 Compose v2。
-2. 保留已有的 .env 和 data/。全新部署时，将 .env.example 复制为 .env，填写 OPENAI_API_KEY，并创建空 data/ 目录。已有 .env 不要用模板覆盖。
+2. 保留已有的 .env 和 data/。全新部署时，将 .env.example 复制为 .env，填写 OPENAI_API_KEY。仓库已通过 data/.gitkeep 保留默认 data/ 目录；数据库和其他运行数据不会随代码发布。已有 .env 不要用模板覆盖。
+
+~~~sh
+# 在 anquanday_auto/ 内执行；-n 保留已有 .env。
+cp -n .env.example .env
+# 编辑 .env，填写 key；Linux 上按下列输出设置 PUID、PGID。
+id -u
+id -g
+~~~
+
 3. 在 anquanday_auto/ 目录执行：
 
 ~~~sh
@@ -15,9 +24,9 @@ docker compose ps
 
 默认开放服务器 B 的 8765 端口。验证：http://服务器B地址:8765/api/v1/health ，正常返回 ok=true。网站服务器 A 必须能够访问这个地址；如果使用内网或 Tailscale，填写 B 对应的可达 IP，并只允许需要的服务器访问采集端口。
 
-Linux 上，容器默认 UID/GID 为 1000:1000。先创建 data/，再将 .env 的 PUID、PGID 填为拥有 data/ 的用户的 id -u、id -g 结果；该用户还需能读取 .env 与 config/。Windows Docker Desktop 通常保持默认即可。
+Linux 上，容器默认 UID/GID 为 1000:1000。将 .env 的 PUID、PGID 填为拥有 data/ 的用户的 id -u、id -g 结果，并确保该用户对 data/ 有写权限、能读取 .env 与 config/。Windows Docker Desktop 通常保持默认即可。
 
-首次创建目录的命令：Linux 用 mkdir -p data；PowerShell 用 New-Item -ItemType Directory -Force data。Compose 刻意不自动创建缺失挂载路径，避免拼错路径后悄悄使用空数据库。
+完整 git clone / git pull 会带上 data/.gitkeep 并创建默认 data/。data/raw/、data/logs/、data/locks/ 和 data/apt/ 由服务按需创建，网站服务器无需额外空目录。如果手工复制时遗漏了 data/，Linux 用 mkdir -p data，PowerShell 用 New-Item -ItemType Directory -Force data 补建。自定义数据路径仍需提前创建。Compose 刻意不自动创建缺失挂载路径，避免拼错路径后悄悄使用空数据库。
 
 ## 配置与数据
 
