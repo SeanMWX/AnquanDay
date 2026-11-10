@@ -38,7 +38,9 @@ Linux 上，容器默认 UID/GID 为 1000:1000。将 .env 的 PUID、PGID 填为
 
 镜像和构建上下文排除了 .env、data/、离线 demo 和截图。GPT key 不通过 Compose 的 environment 传递；只有标题翻译与 MITRE 简介整理子进程按需从挂载文件读取。现有的 .env 可以直接使用。
 
-容器内固定监听 0.0.0.0:8765，数据目录固定 /app/data。JSON 中的本地监听地址不需要修改。定时采集和翻译仍使用 config/service.json：按来源独立运行，默认每小时采集、每 60 秒检查最新日期的待翻译标题。已有翻译缓存继续复用。
+容器内固定监听 0.0.0.0:8765，数据目录固定 /app/data。JSON 中的本地监听地址不需要修改。定时采集和翻译仍使用 config/service.json：按来源独立运行，默认每小时采集；每轮翻译完成后等待 60 秒，继续处理所有日期的待翻译标题（translation.scope=all）。历史新闻自动补译，已有翻译缓存继续复用；每轮和每日额度仍生效。
+
+已有部署若仍为 translation.scope=latest_day，将挂载的 config/service.json 中该值改为 all，执行 docker compose up -d --force-recreate 即可生效；只修改这一配置不需要重新构建镜像。
 
 可在 .env 追加以下可选项，不能覆盖已有 OPENAI_API_KEY：
 

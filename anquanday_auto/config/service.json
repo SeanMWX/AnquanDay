@@ -6,7 +6,7 @@
     "enabled": true,
     "env_file": "../.env",
     "model": "gpt-4.1-mini",
-    "scope": "latest_day",
+    "scope": "all",
     "timezone": "Europe/Brussels",
     "interval_seconds": 60,
     "request_timeout_seconds": 30,

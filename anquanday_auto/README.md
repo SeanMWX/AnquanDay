@@ -60,8 +60,8 @@ python -m service.translate --config config/service.json
 | 配置 | 默认值 | 含义 |
 | --- | --- | --- |
 | enabled | true | 独立开关；不会阻止采集或 API |
-| scope | latest_day | 只处理最新有新闻的一天；改为 all 可补译历史 |
-| timezone | Europe/Brussels | 判断新闻归属日期的时区，与默认页面一致 |
+| scope | all | 所有已采集外文标题均进入队列，包括历史和日期未知的新闻；latest_day 为可选的单日模式 |
+| timezone | Europe/Brussels | 单日模式判断新闻归属日期的时区；all 模式不按日期限制翻译 |
 | env_file | ../.env | 相对于 service.json 的本地密钥文件 |
 | model | gpt-4.1-mini | 可改为支持 Responses 结构化输出的可用模型 |
 | interval_seconds | 60 | 每轮完成后的等待秒数 |
@@ -72,7 +72,9 @@ python -m service.translate --config config/service.json
 | max_attempts | 3 | 同一标题最多尝试三次；需要更多重试时可提高此值并重启 |
 | include_kev | true | 新闻之后逐步翻译漏洞目录名称，可关闭 |
 
-正常自动流程默认只翻译最新有新闻的一天：按 translation.timezone 计算新闻发布日期，漏洞按该日加入目录的日期筛选。之后有更新日期的新闻入库，下一轮会自动跟随新日期；历史和日期未知的条目不进入此次翻译队列。仅有日期的新闻保持来源原始日期。修改网站默认时区时，可同步调整 translation.timezone。
+正常自动流程默认翻译所有已采集的外文标题：新采集新闻、历史日期新闻和日期未知的条目均会在后续轮次处理，不会因为出现更新日期的新闻而跳过历史。翻译与采集独立运行，每轮完成后等待 60 秒再检查；新闻优先，include_kev=true 时随后补译全部漏洞目录名称。每轮 20 条、每日 200 次的限制仍生效，达到每日额度后下一 UTC 日继续；失败遵循重试间隔及次数上限。
+
+已有服务器若仍使用 scope=latest_day，将 config/service.json 的 translation.scope 改为 all 并重启采集服务即可自动补译，无需清空数据库或译文缓存。Docker 执行 docker compose up -d --force-recreate。可选的 latest_day 模式仍保留，只有明确设置时才按 translation.timezone 限定最新新闻发布日期。
 
 新闻流程仅翻译新闻标题和漏洞名称，不生成新闻摘要或翻译全文；正文仍点击原文阅读。网站名称、URL、CVE 和必要的产品专名保留原样。中文原文直接显示。
 

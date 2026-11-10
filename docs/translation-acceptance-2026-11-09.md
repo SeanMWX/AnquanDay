@@ -37,3 +37,7 @@
 ## 部署目录调整
 
 项目现分为 backend_server/ 与 anquanday_auto/ 两个独立部署目录。本文此前的根目录 .env、data/、config/service.json 等旧位置现位于 anquanday_auto/ 下；frontend/ 现位于 backend_server/ 下。最新启动方式见仓库根目录 README 和两个部署目录各自的 README。原数据库、key 和译文已保留。
+
+## 2026-11-10 默认翻译范围调整
+
+按新的要求，默认 translation.scope 已改为 all：历史、最新日期及日期未知的新闻标题全部纳入自动翻译。上文 latest_day 描述的是此前验收配置；该模式仍可手动选择，但不再是默认值。已缓存的译文继续复用，每轮及每日请求额度、失败重试限制不变；新闻优先，随后按 include_kev 配置补译漏洞目录名称。

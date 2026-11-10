@@ -295,13 +295,35 @@ def test_latest_day_without_dated_news_does_not_translate_unknown_dates(setup_tr
     assert run_translation(cfg, lambda *a: pytest.fail("no dated news"))["status"] == "no_dated_news"
 
 
-def test_all_scope_can_still_backfill_history(setup_translation):
+def test_default_scope_translates_all_dates_and_resumes_cached_batches(setup_translation):
     cfg = setup_translation
-    cfg["translation"]["scope"] = "all"
+    cfg["translation"]["max_items_per_run"] = 2
     store = Store(cfg["data_dir"])
-    store.save_article(article(title="Older report", url="https://example.com/old", published="2026-11-08"))
+    for title, slug, published in (
+        ("Older report", "old", "2026-11-08"),
+        ("Unknown date report", "unknown", None),
+        ("Newer report", "new", "2026-11-10"),
+        ("Older report", "duplicate", "2026-11-08"),
+        ("中文新闻", "chinese", "2026-11-10"),
+    ):
+        store.save_article(article(title=title, url="https://example.com/" + slug, published=published))
+    calls = []
+    def provider(title, *args):
+        calls.append(title)
+        return fake_provider(title, *args)
+    assert run_translation(cfg, provider)["translated"] == 2
+    assert run_translation(cfg, provider)["translated"] == 2
+    assert len(calls) == 4
+    assert set(calls) == {"Company reports breach", "Older report", "Unknown date report", "Newer report"}
+    assert run_translation(cfg, provider)["attempted"] == 0
+    for title in calls:
+        assert title_fields(store.db, title)["translation"]["status"] == "translated"
+    # A later collection may discover an older article; the default must still pick it up.
+    store.save_article(article(title="Late discovery", url="https://example.com/discovered", published="2026-11-07"))
+    assert run_translation(cfg, provider)["translated"] == 1
+    assert calls[-1] == "Late discovery" and len(calls) == 5
+    assert run_translation(cfg, provider)["attempted"] == 0
     store.close()
-    assert run_translation(cfg, fake_provider)["translated"] == 2
 
 
 def test_collector_can_commit_during_model_request(setup_translation):
