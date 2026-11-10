@@ -16,6 +16,16 @@
     "max_attempts": 3,
     "include_kev": true
   },
+  "apt_sync": {
+    "enabled": true,
+    "run_on_startup": false,
+    "interval_seconds": 86400,
+    "retry_seconds": 3600,
+    "timeout_seconds": 1800,
+    "translate": true,
+    "max_batches_per_run": 6,
+    "daily_max_requests": 24
+  },
   "scheduler": {
     "enabled": true,
     "run_on_startup": true,

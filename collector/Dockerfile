@@ -16,6 +16,8 @@ RUN pip install --no-cache-dir -r requirements.txt \
 COPY engine/ ./engine/
 COPY service/ ./service/
 COPY config/ ./config/
+# Immutable bootstrap catalogue remains available with custom read-only config mounts.
+COPY config/apt_catalog.json config/ATTACK-LICENSE.txt ./resources/
 COPY run.py ./
 
 USER 1000:1000

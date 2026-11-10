@@ -39,6 +39,9 @@ def main():
                     command_factory=lambda sid: [sys.executable, "-m", "service.translate",
                         "--config", config["config_path"]])
                 jobs.append((translator, "translation-scheduler"))
+            if config["apt_sync"]["enabled"]:
+                from .apt_sync import make_scheduler
+                jobs.append((make_scheduler(config), "apt-catalog-scheduler"))
             threads = []
             for job, name in jobs:
                 thread = Thread(target=job.run, name=name, daemon=True)

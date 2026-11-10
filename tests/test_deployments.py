@@ -116,6 +116,7 @@ def test_two_standalone_folders_communicate_only_through_api(tmp_path):
     cfg = json.loads((collector / "config" / "service.json").read_text(encoding="utf-8"))
     cfg["api"]["port"] = api_port
     cfg["scheduler"]["enabled"] = False
+    cfg["apt_sync"]["enabled"] = False  # No external network calls in this isolation test.
     cfg["translation"]["enabled"] = True
     (collector / "config" / "service.json").write_text(json.dumps(cfg), encoding="utf-8")
     web_cfg = json.loads((site / "config" / "web.json").read_text(encoding="utf-8"))

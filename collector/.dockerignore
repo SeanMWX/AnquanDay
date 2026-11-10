@@ -7,4 +7,7 @@
 !service/
 !service/*.py
 !config/
-!config/*.json
+!config/service.json
+!config/sources.json
+!config/apt_catalog.json
+!config/ATTACK-LICENSE.txt

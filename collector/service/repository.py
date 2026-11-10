@@ -58,6 +58,7 @@ def article_metadata(row, revision_count):
 class Repository:
     def __init__(self, data_dir, sources):
         self.db_path = Path(data_dir) / "anquanday.sqlite3"
+        self.catalog_path = Path(data_dir) / "apt" / "catalog.json"
         self.sources = sources
         self.ids = {s["id"] for s in sources}
 
@@ -187,6 +188,9 @@ class Repository:
                 "page": page, "page_size": size, "pages": pages}
 
     def dispatch(self, path, query):
+        if path in ("/api/v1/apt/groups", "/api/v1/apt/articles"):
+            from .apt import dispatch
+            return dispatch(self, path, query)
         allowed = {"date", "tz", "month", "source", "q", "kind", "sort", "page", "page_size"}
         if set(query) - allowed:
             raise BadQuery("unknown_parameter")

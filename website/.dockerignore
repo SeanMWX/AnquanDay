@@ -5,7 +5,7 @@
 !web/
 !web/*.py
 !config/
-!config/*.json
+!config/web.json
 !frontend/
 !frontend/index.html
 !frontend/app.js

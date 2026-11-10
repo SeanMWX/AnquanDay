@@ -8,8 +8,9 @@
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-<header class="topbar"><div class="topinner"><a class="brand" href="#" aria-label="AnquanDay 首页"><span class="brand-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z" stroke="currentColor" stroke-width="1.5"/><path d="m8.5 12 2.4 2.4 4.6-5" stroke="#77d7bd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Anquan<em>Day</em></span></a></div></header>
+<header class="topbar"><div class="topinner"><a class="brand" href="#news" aria-label="AnquanDay 新闻首页"><span class="brand-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z" stroke="currentColor" stroke-width="1.5"/><path d="m8.5 12 2.4 2.4 4.6-5" stroke="#77d7bd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Anquan<em>Day</em></span></a><nav class="main-nav" aria-label="主导航"><a href="#news" data-section="news" aria-current="page">新闻</a><a href="#malware" data-section="malware">恶意软件</a><a href="#apt" data-section="apt">APT</a></nav></div></header>
 <main>
+<section id="news-view" aria-label="新闻">
 <div class="collection-layout">
 <details class="calendar-card" open><summary>新闻日历</summary><div class="calendar-body">
 <div class="calendar-heading"><button id="month-previous" type="button" aria-label="上个月">←</button><strong id="calendar-month" aria-live="polite"></strong><button id="month-next" type="button" aria-label="下个月">→</button></div>
@@ -31,6 +32,20 @@
 </div>
 </section>
 </div>
+</section>
+<section id="malware-view" hidden aria-labelledby="malware-heading"><div class="placeholder-page"><span class="section-kicker">AnquanDay</span><h1 id="malware-heading">恶意软件</h1><p>内容准备中</p></div></section>
+<section id="apt-view" hidden aria-labelledby="apt-heading">
+<div class="apt-heading"><div><span class="section-kicker">威胁组织观察</span><h1 id="apt-heading">APT 组织档案</h1><p>收录公开的 APT 及其他威胁组织，追踪近期新闻提及。</p></div><span class="catalog-stamp" id="apt-catalog-stamp">MITRE ATT&CK</span></div>
+<div class="apt-overview" id="apt-overview" aria-live="polite"></div>
+<div class="apt-method"><details><summary>如何判断报道活跃度？</summary><p>根据采集新闻的原文标题、正文或来源摘要，匹配组织名及 MITRE 列出的关联名称，排除可识别的“相关推荐”尾部。标题提及用于划分报道活跃度；仅正文或摘要提及单独统计，可能只是历史背景。关联名称的组织边界可能重叠，不能视为完全等同。</p><p>所选时间窗口内：标题提及至少 5 篇、来自至少 2 个来源为“报道较多”；至少 2 篇为“多次报道”；1 篇为“近期报道”。无标题提及时，显示“仅正文提及”或“未见报道”。</p><p>这是报道提及量，不是实际攻击次数，也不代表当前是否正在攻击。按新闻发布时间归入所选时区，时间不确定的新闻不计入；同一篇文章的多次采集和名称多次出现只计一次，不同来源报道同一事件仍分别计数。只统计已收录新闻，名称匹配可能漏报或误报。</p></details></div>
+<div class="apt-tools"><label class="apt-search"><span class="sr-only">搜索组织</span><input id="apt-search" type="search" placeholder="搜索组织、关联名称或中文介绍…" autocomplete="off"></label><label><span class="sr-only">观察窗口</span><select class="control" id="apt-days"><option value="7">近 7 天</option><option value="30" selected>近 30 天</option><option value="90">近 90 天</option></select></label><label><span class="sr-only">报道筛选</span><select class="control" id="apt-activity"><option value="all">全部组织</option><option value="mentioned">有新闻提及</option><option value="quiet">未见报道</option></select></label><label><span class="sr-only">组织排序</span><select class="control" id="apt-sort"><option value="activity">报道活跃度优先</option><option value="name">组织名称排序</option></select></label><label><span class="sr-only">统计时区</span><select class="control" id="apt-timezone"><option value="Europe/Brussels">比利时时间</option><option value="Asia/Shanghai">北京时间</option><option value="UTC">协调世界时</option></select></label></div>
+<div class="apt-results-bar"><span id="apt-result-count" aria-live="polite"></span><span id="apt-window"></span></div>
+<div id="apt-message" class="api-message" role="status" hidden></div>
+<div id="apt-grid" class="apt-grid"></div>
+<div class="apt-empty" id="apt-empty" hidden><h2>没有匹配的组织</h2><p>试试其他名称，或调整报道筛选。</p></div>
+<div class="pagination apt-pagination"><span id="apt-page-info"></span><div class="page-actions"><button id="apt-previous" type="button">← 上一页</button><span id="apt-page-number"></span><button id="apt-next" type="button">下一页 →</button></div></div>
+<footer class="apt-attribution"><p id="apt-scope"></p><p>中文简介由原始档案整理翻译，可展开查看原文及出处。档案更新和新闻统计分别进行。</p><p><a href="https://attack.mitre.org/groups/" target="_blank" rel="noopener noreferrer">MITRE ATT&CK 组织目录 ↗</a></p><details><summary>版权声明原文</summary><p>© 2026 The MITRE Corporation. This work is reproduced and distributed with the permission of The MITRE Corporation.</p></details></footer>
+</section>
 </main>
 <script src="/app.js" defer></script>
 </body>

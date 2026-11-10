@@ -57,7 +57,11 @@ python website/run.py
 - 新闻来源：[collector/config/sources.json](collector/config/sources.json)。
 - 网站 API 地址和显示设置：[website/config/web.json](website/config/web.json)。
 
-.env 和 data/ 被 Git 忽略。迁移保留 144 篇新闻、159 个内容修订、1,772 条漏洞记录和 30 条译文。
+.env、.env.*（示例模板除外）、data/、SQLite 数据库及其伴随文件、日志、缓存、虚拟环境和本地配置副本均被 Git 忽略。密钥只填写在 .env；仓库中的默认 JSON 配置不应填写密钥。
+
+截图统一保存在 docs/screenshots/，其他本地验收产物放在 docs/local-artifacts/；这两个目录不会提交。旧的 *-preview 图片和自动翻译截图也已加入忽略规则。正式网页使用的图片资源仍可正常纳入版本控制。
+
+collector/config/apt_catalog.json 和 ATTACK-LICENSE.txt 是部署必需的公开初始资料，需要提交；运行时更新与翻译缓存位于 collector/data/apt/，不会提交。两个 Docker 构建上下文仅允许所需的默认配置文件，排除额外的本地配置。
 
 自动翻译默认只处理最新有新闻的一天（Europe/Brussels），每轮最多 20 条，每个 UTC 日最多 200 次尝试。中文原文不调用模型，已有译文复用缓存；标题改变后重新翻译。网站原名、链接和 CVE 编号保留。详情见 collector/README.md。
 
@@ -70,7 +74,7 @@ python -m pip install -r requirements-dev.txt
 python -m pytest -q tests
 ~~~
 
-当前 77 项测试通过。测试覆盖采集与证据、时区、缓存和重试、独立来源、自动翻译、API、网站代理、容器环境配置，以及两个部署目录的隔离运行。Docker 已分别实际构建和启动验收，见 [Docker 验收记录](docs/docker-acceptance-2026-11-09.md)。
+已通过全量回归和 MITRE 同步专项复验，覆盖采集、API、APT 匹配及部署。测试覆盖采集与证据、时区、缓存和重试、独立来源、自动翻译、API、网站代理、容器环境配置，以及两个部署目录的隔离运行。Docker 已分别实际构建和启动验收，见 [Docker 验收记录](docs/docker-acceptance-2026-11-09.md)。
 
 旧离线 demo 可以在仓库根目录重新生成：
 
@@ -78,7 +82,7 @@ python -m pytest -q tests
 python scripts/build_demo.py
 ~~~
 
-输出为 website/frontend/demo.html；正常网站无需执行这条命令。
+输出为 website/frontend/demo.html，该生成快照已被 Git 忽略；仅提交生成脚本和 demo.template.html 模板。正常网站无需执行这条命令。
 
 ## 当前边界
 
@@ -90,3 +94,11 @@ python scripts/build_demo.py
 - [翻译验收](docs/translation-acceptance-2026-11-09.md)
 
 - [双目录部署验收](docs/deployment-split-2026-11-09.md)
+
+APT 栏目收录 MITRE ATT&CK 公开组织档案并提供中文介绍；根据已采集新闻统计报道提及量，可展开原文与匹配依据。目录范围、匹配方法、接口及更新命令见 [采集服务说明](collector/README.md#apt-目录与报道活跃度)。
+
+- [APT 与顶部栏目验收](docs/apt-acceptance-2026-11-09.md)
+
+新闻与 MITRE 使用独立定时任务，均在 API 服务器运行：默认新闻每个来源完成后等待 1 小时，MITRE 每轮成功后等待 24 小时；失败或简介未完成时默认 1 小时重试。分别配置 collector/config/service.json 的 scheduler 和 apt_sync，修改后重启服务。MITRE 自动目录与译文保存在 collector/data/apt/，Docker 重建后保留。
+
+- [MITRE 自动同步与 Docker 验收](docs/mitre-sync-acceptance-2026-11-10.md)

@@ -221,6 +221,11 @@ def test_web_proxies_only_api_and_serves_no_data_files(api):
     try:
         assert request(base, "/api/v1/overview?date=2026-11-09")[1]["news"] == 2
         assert request(base, "/config.json")[1]["refresh_seconds"] == 60
+        apt = request(base, "/api/v1/apt/groups?date=2026-11-09&q=APT28")
+        assert apt[0] == 200 and apt[1]["items"][0]["name"] == "APT28"
+        gid = apt[1]["items"][0]["id"]
+        assert request(base, "/api/v1/apt/articles?date=2026-11-09&group=" + gid)[1]["total"] == 0
+        assert request(base, "/api/v1/apt/groups", "POST")[0] == 405
         assert request(base, "/data/anquanday.sqlite3")[0] == 404
         assert request(base, "/../config/service.json")[0] == 404
         assert request(base, "/api/v1/articles", "POST")[0] == 405

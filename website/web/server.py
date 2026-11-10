@@ -10,6 +10,7 @@ from urllib.error import HTTPError, URLError
 from zoneinfo import ZoneInfo
 
 ROUTES = {"/api/v1/health", "/api/v1/sources", "/api/v1/overview", "/api/v1/calendar", "/api/v1/articles", "/api/v1/kev"}
+ROUTES.update({"/api/v1/apt/groups", "/api/v1/apt/articles"})
 ASSETS = {"/": ("index.html", "text/html; charset=utf-8"), "/index.html": ("index.html", "text/html; charset=utf-8"),
           "/app.js": ("app.js", "text/javascript; charset=utf-8"), "/styles.css": ("styles.css", "text/css; charset=utf-8")}
 

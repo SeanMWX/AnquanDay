@@ -13,7 +13,7 @@ LOG = logging.getLogger(__name__)
 
 
 class Scheduler:
-    def __init__(self, config, sources, command_factory=None):
+    def __init__(self, config, sources, command_factory=None, initial_run_immediately=False):
         self.config = config
         self.settings = config["scheduler"]
         self.sources = {s["id"]: s for s in sources if self.options(s["id"]).get("enabled", True)}
@@ -22,6 +22,7 @@ class Scheduler:
         self.due = {}
         self.command_factory = command_factory or self.command
         self.ready = Event()
+        self.initial_run_immediately = initial_run_immediately
 
     def options(self, sid):
         return dict(self.settings, **self.settings.get("sources", {}).get(sid, {}))
@@ -43,8 +44,10 @@ class Scheduler:
                 process.kill()
                 process.wait(timeout=2)
 
-    def checkpoint(self, store, sid):
-        self.due[sid] = time.time() + self.options(sid)["interval_seconds"]
+    def checkpoint(self, store, sid, failed=False):
+        options = self.options(sid)
+        interval = options.get("failure_interval_seconds", options["interval_seconds"]) if failed else options["interval_seconds"]
+        self.due[sid] = time.time() + interval
         store.set_state("schedule:" + sid, {"next_due": self.due[sid], "finished_at": now()})
 
     def tick(self, store):
@@ -61,7 +64,7 @@ class Scheduler:
                     LOG.info("source=%s completed exit=%s", sid, process.returncode)
                 log.close()
                 del self.active[sid]
-                self.checkpoint(store, sid)
+                self.checkpoint(store, sid, failed=timed_out or process.returncode != 0)
         for sid in sorted(self.sources, key=lambda x: self.due[x]):
             if self.stop_event.is_set() or len(self.active) >= self.settings["max_parallel_sources"]:
                 break
@@ -75,7 +78,7 @@ class Scheduler:
                     stdout=log, stderr=log, creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
             except OSError:
                 log.close()
-                self.checkpoint(store, sid)
+                self.checkpoint(store, sid, failed=True)
                 LOG.exception("source=%s could not start", sid)
                 continue
             self.active[sid] = (process, time.monotonic(), log, now())
@@ -87,7 +90,7 @@ class Scheduler:
             for sid in self.sources:
                 saved = store.state("schedule:" + sid, {})
                 self.due[sid] = time.time() if self.settings["run_on_startup"] else saved.get(
-                    "next_due", time.time() + self.options(sid)["interval_seconds"])
+                    "next_due", time.time() + (0 if self.initial_run_immediately else self.options(sid)["interval_seconds"]))
             self.ready.set()
             while not self.stop_event.is_set():
                 try:
@@ -100,6 +103,6 @@ class Scheduler:
             for sid, (process, started, log, started_at) in list(self.active.items()):
                 self.terminate(process)
                 log.close()
-                self.checkpoint(store, sid)
+                self.checkpoint(store, sid, failed=True)
             self.active.clear()
             store.close()

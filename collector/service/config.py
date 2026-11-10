@@ -83,5 +83,18 @@ def load_service(path):
         raise ValueError("invalid_translation_env_file")
     translation["env_file"] = str((path.parent / translation["env_file"]).resolve())
     cfg["translation"] = translation
+    apt = {"enabled": False, "run_on_startup": False, "interval_seconds": 86400,
+        "retry_seconds": 3600, "timeout_seconds": 1800, "translate": True,
+        "max_batches_per_run": 6, "daily_max_requests": 24}
+    supplied = cfg.get("apt_sync", {})
+    if not isinstance(supplied, dict) or set(supplied) - set(apt):
+        raise ValueError("unknown_apt_sync_setting")
+    apt.update(supplied)
+    for key in ("enabled", "run_on_startup", "translate"):
+        boolean(apt[key], "apt_sync." + key)
+    for key, low, high in (("interval_seconds", 3600, 31536000), ("retry_seconds", 60, 86400),
+            ("timeout_seconds", 30, 86400), ("max_batches_per_run", 1, 30), ("daily_max_requests", 1, 100)):
+        integer(apt[key], "apt_sync." + key, low, high)
+    cfg["apt_sync"] = apt
     cfg["config_path"] = str(path)
     return cfg, sources
