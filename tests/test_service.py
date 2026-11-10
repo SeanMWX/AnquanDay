@@ -214,7 +214,7 @@ def test_config_per_source_override_and_rejection(tmp_path):
 def test_web_proxies_only_api_and_serves_no_data_files(api):
     cfg = {"host": "127.0.0.1", "port": 0, "api_base_url": api, "api_timeout_seconds": 2,
            "display_timezone": "Europe/Brussels", "refresh_seconds": 60}
-    server = create_web(cfg, Path(__file__).resolve().parents[1] / "website" / "frontend")
+    server = create_web(cfg, Path(__file__).resolve().parents[1] / "backend_server" / "frontend")
     t = threading.Thread(target=server.serve_forever, daemon=True)
     t.start()
     base = "http://127.0.0.1:" + str(server.server_port)

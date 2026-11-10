@@ -1,6 +1,6 @@
 # AnquanDay 收集服务与 API
 
-将整个 collector/ 文件夹部署到服务器 B。engine/ 负责采集和原文证据，service/ 负责自动调度、翻译和只读 API。SQLite、原始抓取文件和 GPT key 都保存在本目录。
+将整个 anquanday_auto/ 文件夹部署到服务器 B。engine/ 负责采集和原文证据，service/ 负责自动调度、翻译和只读 API。SQLite、原始抓取文件和 GPT key 都保存在本目录。
 
 ## Docker 部署
 
@@ -8,7 +8,7 @@
 
 ## 安装与运行
 
-在 collector/ 内运行：
+在 anquanday_auto/ 内运行：
 
 ~~~powershell
 python -m pip install -r requirements.txt
@@ -27,7 +27,7 @@ python run.py
 
 修改监听配置后重启本服务。data_dir、sources_file、translation.env_file 都相对于配置文件所在目录解析，不依赖仓库外的路径。
 
-本次目录迁移已保留 data/ 中的数据库和译文，已填写的 key 位于 collector/.env。独立部署一份新目录时，将 .env.example 复制为 .env，再填写 OPENAI_API_KEY。
+本次目录迁移已保留 data/ 中的数据库和译文，已填写的 key 位于 anquanday_auto/.env。独立部署一份新目录时，将 .env.example 复制为 .env，再填写 OPENAI_API_KEY。
 
 数据位置：
 
@@ -177,7 +177,7 @@ MITRE 同步已接入 API 服务的独立定时任务，与新闻采集、新闻
 
 中文简介依据原始 description 整理，记录模型、输入哈希、规则版本及时间；每个组织提供 MITRE 原始链接。复用 translation.env_file 和 translation.model，GPT key 仍只在 API 服务器；目录翻译使用独立预算。成功批次逐批原子保存。手动与自动更新共用文件锁，避免同时运行。网页刷新和报道匹配不调用 GPT。
 
-需要立即执行一轮时，在 collector/ 内运行：
+需要立即执行一轮时，在 anquanday_auto/ 内运行：
 
 ~~~powershell
 python -m service.apt_sync --config config/service.json

@@ -1,7 +1,7 @@
 # 两个独立部署目录验收（2026-11-09）
 
-- website/：前端 frontend/、网站后端 web/、config/web.json、requirements.txt、run.py、README.md。
-- collector/：engine/、service/、config/、requirements.txt、run.py、README.md、本地 .env、data/。
+- backend_server/：前端 frontend/、网站后端 web/、config/web.json、requirements.txt、run.py、README.md。
+- anquanday_auto/：engine/、service/、config/、requirements.txt、run.py、README.md、本地 .env、data/。
 - 根目录 tests/、scripts/ 和 docs/ 是开发资料，运行两个服务无需依赖它们。
 - 已停止旧进程后移动目录，并执行 SQLite checkpoint 与 integrity_check。迁移前后均为 144 篇新闻、159 个修订、1,772 条漏洞记录、30 条译文。
 - 实际启动使用独立工作目录，网站 http://127.0.0.1:8766，采集 API http://127.0.0.1:8765。正常自动采集与翻译继续运行。

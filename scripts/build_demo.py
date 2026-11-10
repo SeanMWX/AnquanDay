@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "collector"))
+sys.path.insert(0, str(ROOT / "anquanday_auto"))
 from engine.title_translation import title_fields
 
 
@@ -61,16 +61,16 @@ def snapshot(db_path, source_path):
 
 def main():
     parser = argparse.ArgumentParser(description="生成可离线打开的 AnquanDay HTML demo")
-    parser.add_argument("--db", type=Path, default=ROOT / "collector" / "data" / "anquanday.sqlite3")
-    parser.add_argument("--output", type=Path, default=ROOT / "website" / "frontend" / "demo.html")
+    parser.add_argument("--db", type=Path, default=ROOT / "anquanday_auto" / "data" / "anquanday.sqlite3")
+    parser.add_argument("--output", type=Path, default=ROOT / "backend_server" / "frontend" / "demo.html")
     args = parser.parse_args()
-    data = snapshot(args.db, ROOT / "collector" / "config" / "sources.json")
+    data = snapshot(args.db, ROOT / "anquanday_auto" / "config" / "sources.json")
     # Script data cannot terminate its element, even if a feed title contains HTML.
     payload = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
     for char, escaped in [("&", "\\u0026"), ("<", "\\u003c"), (">", "\\u003e"),
                           ("\u2028", "\\u2028"), ("\u2029", "\\u2029")]:
         payload = payload.replace(char, escaped)
-    template = (ROOT / "website" / "frontend" / "demo.template.html").read_text(encoding="utf-8")
+    template = (ROOT / "backend_server" / "frontend" / "demo.template.html").read_text(encoding="utf-8")
     if template.count("__ANQUANDAY_DATA__") != 1:
         raise ValueError("Expected one data placeholder")
     args.output.parent.mkdir(parents=True, exist_ok=True)

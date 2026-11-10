@@ -2,7 +2,7 @@
 
 ## 配置与职责
 
-所有定时工作都在 collector/API 服务器内运行，网站继续通过既有 API 读取。
+所有定时工作都在 anquanday_auto/API 服务器内运行，网站继续通过既有 API 读取。
 
 | 任务 | 默认等待间隔（任务完成后） | 配置 |
 | --- | --- | --- |
@@ -38,4 +38,4 @@ Docker collector 镜像已实际重新构建。用两个隔离 Compose 项目分
 
 测试挂载的只读 config/ 只有 service.json 和 sources.json，没有目录种子，容器成功从 resources/ 初始化 data/apt/。完成同步后关闭强制启动执行并两次重建容器（其中一次使用最终镜像）：目录和全部中文简介保留，next_due 与上次执行时间保持一致，没有重复执行。验收容器随后移除，本机正常服务继续自动运行。
 
-网站无需新增定时任务。升级 API 服务器时保留 data/ 和 .env，合入 apt_sync 配置，再在 collector/ 执行 docker compose up -d --build。
+网站无需新增定时任务。升级 API 服务器时保留 data/ 和 .env，合入 apt_sync 配置，再在 anquanday_auto/ 执行 docker compose up -d --build。

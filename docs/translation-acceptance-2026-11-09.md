@@ -16,7 +16,7 @@
 
 ## 页面效果
 
-![保留网站原名，新闻优先中文](../website/frontend/translation-preview.png)
+验收截图仅保存在本地 docs/screenshots/，不纳入版本库。
 
 ## 真实接口补充验收
 
@@ -32,8 +32,8 @@
 - 68 项测试通过，包括日期/时区筛选、跨日自动推进、并发采集写入、中断恢复及术语校验。
 - 页面已确认中文标题、原始网站名称和展开英文原文；正式地址 http://127.0.0.1:8766 。服务保持运行，尚未安装开机自启。
 
-![自动翻译后的新闻](../website/frontend/auto-translated-2026-11-09.png)
+自动翻译后的新闻截图同样保存在本地 docs/screenshots/。
 
 ## 部署目录调整
 
-项目现分为 website/ 与 collector/ 两个独立部署目录。本文此前的根目录 .env、data/、config/service.json 等旧位置现位于 collector/ 下；frontend/ 现位于 website/ 下。最新启动方式见仓库根目录 README 和两个部署目录各自的 README。原数据库、key 和译文已保留。
+项目现分为 backend_server/ 与 anquanday_auto/ 两个独立部署目录。本文此前的根目录 .env、data/、config/service.json 等旧位置现位于 anquanday_auto/ 下；frontend/ 现位于 backend_server/ 下。最新启动方式见仓库根目录 README 和两个部署目录各自的 README。原数据库、key 和译文已保留。

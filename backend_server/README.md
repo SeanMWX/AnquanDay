@@ -1,6 +1,6 @@
 # AnquanDay 网站前后端
 
-将整个 website/ 文件夹部署到服务器 A。本目录可独立运行。
+将整个 backend_server/ 文件夹部署到服务器 A。本目录可独立运行。
 
 | 目录 | 职责 |
 | --- | --- |
@@ -8,7 +8,7 @@
 | web/ | 网站后端，提供静态页面并把只读 API 请求转发到采集服务器 |
 | config/web.json | 网站监听地址、采集 API 地址、页面时区和刷新间隔 |
 
-网站后端通过 HTTP API 获取新闻，浏览器始终访问网站服务器。数据库和 GPT key 由 collector/ 所在的服务器 B 管理。
+网站后端通过 HTTP API 获取新闻，浏览器始终访问网站服务器。数据库和 GPT key 由 anquanday_auto/ 所在的服务器 B 管理。
 
 ## Docker 部署
 
@@ -16,7 +16,7 @@
 
 ## 安装与运行
 
-在 website/ 内运行：
+在 backend_server/ 内运行：
 
 ~~~powershell
 python -m pip install -r requirements.txt
@@ -54,6 +54,6 @@ frontend/demo.html 是本地生成的快照，已被 Git 忽略，不随仓库�
 
 顶部提供“新闻 / 恶意软件 / APT”，使用 #news、#malware、#apt 地址，支持刷新及浏览器前进/后退。点击 AnquanDay 标志会回到今天的全部新闻，并清除新闻搜索和筛选。恶意软件栏目目前仅占位。
 
-APT 栏目展示公开组织的中文简介、关联名称、原始出处及近 7/30/90 天的报道提及量，支持搜索、筛选、分页及查看匹配证据。统计由 collector API 计算，网站后端只转发 /api/v1/apt/groups 和 /api/v1/apt/articles。网站与 API 通过现有接口连接。MITRE 自动同步只运行在 collector 服务器，更新后的目录保存在其 data/apt/；网站无需额外定时任务或目录文件。
+APT 栏目展示公开组织的中文简介、关联名称、原始出处及近 7/30/90 天的报道提及量，支持搜索、筛选、分页及查看匹配证据。统计由 anquanday_auto API 计算，网站后端只转发 /api/v1/apt/groups 和 /api/v1/apt/articles。网站与 API 通过现有接口连接。MITRE 自动同步只运行在 anquanday_auto 所在服务器，更新后的目录保存在其 data/apt/；网站无需额外定时任务或目录文件。
 
 报道活跃度不等于实际攻击频率；目录包含 APT 及其他公开威胁组织。列表不触发 GPT 请求。已展开的 APT 资料阅读期间暂停自动重绘，避免打断阅读；切换筛选或重新进入页面会获取新数据。

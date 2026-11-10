@@ -2,18 +2,18 @@
 
 ## 交付
 
-- collector/ 和 website/ 分别具有 Dockerfile、compose.yaml、.dockerignore 和 DOCKER.md，可只复制对应目录部署。
+- anquanday_auto/ 和 backend_server/ 分别具有 Dockerfile、compose.yaml、.dockerignore 和 DOCKER.md，可只复制对应目录部署。
 - 两边独立构建、独立 Compose 项目、独立网络；网站通过显式配置的采集服务器 URL 连接。
 - Python 3.12 slim 镜像，默认 UID/GID 1000，根文件系统只读，配置只读挂载，采集 data/ 单独可写。
-- SQLite、原始证据与翻译缓存使用宿主机 collector/data/；collector/.env 在运行时只读挂载，不进入镜像。
-- 网站预留 website/.env 与 .env.example，COLLECTOR_API_BASE_URL 留空，待部署时填写真实服务器 B 的地址。
-- 现有 collector/.env 与生产数据未修改；网站、来源名称、中文标题展示规则保持现状。
+- SQLite、原始证据与翻译缓存使用宿主机 anquanday_auto/data/；anquanday_auto/.env 在运行时只读挂载，不进入镜像。
+- 网站预留 backend_server/.env 与 .env.example，COLLECTOR_API_BASE_URL 留空，待部署时填写真实服务器 B 的地址。
+- 现有 anquanday_auto/.env 与生产数据未修改；网站、来源名称、中文标题展示规则保持现状。
 
 ## 实测环境
 
 Windows Docker Desktop，Linux amd64 容器；Docker Engine 28.3.2、Compose 2.39.1。当前电脑的 docker compose 子命令不可用，实际使用 Docker Desktop 自带的 docker-compose.exe 执行相同 Compose v2 配置，未修改系统安装。
 
-两个镜像分别从 collector/、website/ 构建成功。验收使用独立 Compose 项目 anquanday-smoke-collector 与 anquanday-smoke-website，端口分别为 18865、18866。网站通过 http://host.docker.internal:18865 连接发布的 API 端口，两边未加入共享网络。
+两个镜像分别从 anquanday_auto/、backend_server/ 构建成功。验收使用独立 Compose 项目 anquanday-smoke-collector 与 anquanday-smoke-website，端口分别为 18865、18866。网站通过 http://host.docker.internal:18865 连接发布的 API 端口，两边未加入共享网络。
 
 这是同一台 Docker Desktop 上的双项目隔离测试，尚未部署到用户的两台远程服务器；远程地址和防火墙连通性需要在正式服务器填好后检查。
 
@@ -41,8 +41,8 @@ Windows Docker Desktop，Linux amd64 容器；Docker Engine 28.3.2、Compose 2.3
 
 ## 正式启动
 
-先按 collector/DOCKER.md 在服务器 B 初始化 .env、data/ 和 Linux 目录权限，在 collector/ 运行 docker compose up -d --build。
+先按 anquanday_auto/DOCKER.md 在服务器 B 初始化 .env、data/ 和 Linux 目录权限，在 anquanday_auto/ 运行 docker compose up -d --build。
 
-再按 website/DOCKER.md 在服务器 A 的 .env 填入 COLLECTOR_API_BASE_URL=http://服务器B地址:8765，在 website/ 运行 docker compose up -d --build。
+再按 backend_server/DOCKER.md 在服务器 A 的 .env 填入 COLLECTOR_API_BASE_URL=http://服务器B地址:8765，在 backend_server/ 运行 docker compose up -d --build。
 
 如果迁移现有数据库，先停止原收集进程再复制整个 data/；不要让原生 Python 与 Docker 同时使用同一数据库目录。

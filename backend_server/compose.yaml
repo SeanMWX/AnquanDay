@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     stop_grace_period: 15s
     environment:
-      ANQUANDAY_API_BASE_URL: ${COLLECTOR_API_BASE_URL:?请在 website/.env 填写采集服务器的 API 地址}
+      ANQUANDAY_API_BASE_URL: ${COLLECTOR_API_BASE_URL:?请在 backend_server/.env 填写采集服务器的 API 地址}
     ports:
       - "${WEBSITE_BIND_IP:-0.0.0.0}:${WEBSITE_PORT:-8766}:8766"
     volumes:

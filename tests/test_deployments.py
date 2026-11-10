@@ -20,8 +20,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_container_environment_overrides_keep_native_configs_unchanged(monkeypatch, tmp_path):
-    api_path = ROOT / "collector" / "config" / "service.json"
-    web_path = ROOT / "website" / "config" / "web.json"
+    api_path = ROOT / "anquanday_auto" / "config" / "service.json"
+    web_path = ROOT / "backend_server" / "config" / "web.json"
     before = (api_path.read_bytes(), web_path.read_bytes())
     monkeypatch.setenv("ANQUANDAY_API_HOST", "0.0.0.0")
     monkeypatch.setenv("ANQUANDAY_API_PORT", "18765")
@@ -41,18 +41,18 @@ def test_container_environment_overrides_keep_native_configs_unchanged(monkeypat
 
 
 @pytest.mark.parametrize("name,value,side", [
-    ("ANQUANDAY_API_PORT", "65536", "collector"),
-    ("ANQUANDAY_API_PORT", "invalid", "collector"),
-    ("ANQUANDAY_API_HOST", "", "collector"),
-    ("ANQUANDAY_WEB_PORT", "0", "website"),
-    ("ANQUANDAY_WEB_HOST", "", "website"),
-    ("ANQUANDAY_API_BASE_URL", "", "website"),
-    ("ANQUANDAY_API_BASE_URL", "http://example.test/unexpected-path", "website"),
+    ("ANQUANDAY_API_PORT", "65536", "anquanday_auto"),
+    ("ANQUANDAY_API_PORT", "invalid", "anquanday_auto"),
+    ("ANQUANDAY_API_HOST", "", "anquanday_auto"),
+    ("ANQUANDAY_WEB_PORT", "0", "backend_server"),
+    ("ANQUANDAY_WEB_HOST", "", "backend_server"),
+    ("ANQUANDAY_API_BASE_URL", "", "backend_server"),
+    ("ANQUANDAY_API_BASE_URL", "http://example.test/unexpected-path", "backend_server"),
 ])
 def test_invalid_container_configuration_is_rejected(monkeypatch, name, value, side):
     monkeypatch.setenv(name, value)
     with pytest.raises(ValueError):
-        if side == "collector":
+        if side == "anquanday_auto":
             load_service(ROOT / side / "config" / "service.json")
         else:
             load_config(ROOT / side / "config" / "web.json")
@@ -100,10 +100,10 @@ def stop(process):
 
 def test_two_standalone_folders_communicate_only_through_api(tmp_path):
     # Neither server has access to the other's packages, configuration, or DB.
-    site = tmp_path / "server-a" / "website"
-    collector = tmp_path / "server-b" / "collector"
-    for name, target, folders in (("website", site, ("web", "config", "frontend")),
-                                  ("collector", collector, ("engine", "service", "config"))):
+    site = tmp_path / "server-a" / "backend_server"
+    collector = tmp_path / "server-b" / "anquanday_auto"
+    for name, target, folders in (("backend_server", site, ("web", "config", "frontend")),
+                                  ("anquanday_auto", collector, ("engine", "service", "config"))):
         for folder in folders:
             shutil.copytree(ROOT / name / folder, target / folder,
                 ignore=shutil.ignore_patterns("__pycache__", "*.png", "demo.html", "demo.template.html"))

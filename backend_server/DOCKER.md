@@ -1,6 +1,6 @@
 # 网站前后端：服务器 A
 
-整个 website/ 目录可以单独复制到服务器 A；不需要 collector/、SQLite 或 GPT key。一个容器同时提供前端页面和网站后端。
+整个 backend_server/ 目录可以单独复制到服务器 A；不需要 anquanday_auto/、SQLite 或 GPT key。一个容器同时提供前端页面和网站后端。
 
 ## 首次部署
 
@@ -15,7 +15,7 @@ WEBSITE_BIND_IP=0.0.0.0
 
 10.0.0.20 只是示例，请换成 A 能访问的 B 的 IP 或域名。B 的 COLLECTOR_PORT 改动后，这里的端口也要同步。跨服务器不能填写 127.0.0.1、localhost 或另一套 Compose 的服务名 collector。地址只填写协议、主机和端口，不加 /api/v1。没有填写地址时 Compose 会明确报错，防止错误连接。
 
-3. 在 website/ 内运行：
+3. 在 backend_server/ 内运行：
 
 ~~~sh
 docker compose up -d --build

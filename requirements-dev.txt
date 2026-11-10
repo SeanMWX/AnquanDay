@@ -1,3 +1,3 @@
--r collector/requirements.txt
--r website/requirements.txt
+-r anquanday_auto/requirements.txt
+-r backend_server/requirements.txt
 pytest>=6.2.4,<9

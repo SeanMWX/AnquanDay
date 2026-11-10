@@ -1,12 +1,12 @@
 # 收集服务：服务器 B
 
-整个 collector/ 目录可以单独复制到服务器 B；不需要 website/ 或仓库根目录。Docker 镜像内包含 engine、API、来源独立调度、自动翻译和 MITRE 目录自动同步。
+整个 anquanday_auto/ 目录可以单独复制到服务器 B；不需要 backend_server/ 或仓库根目录。Docker 镜像内包含 engine、API、来源独立调度、自动翻译和 MITRE 目录自动同步。
 
 ## 首次部署
 
 1. 安装并启动 Docker Engine / Docker Desktop 与 Compose v2。
 2. 保留已有的 .env 和 data/。全新部署时，将 .env.example 复制为 .env，填写 OPENAI_API_KEY，并创建空 data/ 目录。已有 .env 不要用模板覆盖。
-3. 在 collector/ 目录执行：
+3. 在 anquanday_auto/ 目录执行：
 
 ~~~sh
 docker compose up -d --build
