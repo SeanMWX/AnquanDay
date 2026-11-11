@@ -65,7 +65,7 @@ python backend_server/run.py
 
 anquanday_auto/config/apt_catalog.json 和 ATTACK-LICENSE.txt 是部署必需的公开初始资料，需要提交；运行时更新与翻译缓存位于 anquanday_auto/data/apt/，不会提交。两个 Docker 构建上下文仅允许所需的默认配置文件，排除额外的本地配置。
 
-自动翻译默认处理全部已采集的外文标题（translation.scope=all），包括历史日期和日期未知的新闻；新采集的条目自动进入后续翻译轮次。先处理新闻，再处理漏洞目录名称，每轮最多 20 条，每个 UTC 日最多 200 次尝试，未完成部分后续继续。中文原文不调用模型，已有译文复用缓存；标题改变后重新翻译。网站原名、链接和 CVE 编号保留。详情见 anquanday_auto/README.md。
+自动翻译默认处理全部已采集的外文标题（translation.scope=all），包括历史日期和日期未知的新闻；新采集的条目自动进入后续翻译轮次。每轮先处理新闻，再处理漏洞目录名称，每轮最多 20 条，完成后等待 60 秒继续。默认不设程序内的每日请求上限（translation.daily_max_requests=0），也可设为正整数启用每日限制；仍记录实际请求次数并保留失败重试限制。中文原文不调用模型，已有译文复用缓存；标题改变后重新翻译。网站原名、链接和 CVE 编号保留。详情见 anquanday_auto/README.md。
 
 ## 验收与开发
 

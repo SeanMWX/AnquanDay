@@ -66,13 +66,15 @@ python -m service.translate --config config/service.json
 | model | gpt-4.1-mini | 可改为支持 Responses 结构化输出的可用模型 |
 | interval_seconds | 60 | 每轮完成后的等待秒数 |
 | max_items_per_run | 20 | 每轮最多尝试翻译多少个标题 |
-| daily_max_requests | 200 | 每个 UTC 自然日最多请求尝试次数；失败和中断也计入 |
+| daily_max_requests | 0 | 0 表示不设程序内每日上限；1–10000 表示每个 UTC 自然日最多请求尝试次数，失败和中断也计入 |
 | request_timeout_seconds | 30 | 单次请求的读取超时；连接超时为 5 秒 |
 | retry_seconds | 3600 | 同一标题失败后等待一小时再重试 |
 | max_attempts | 3 | 同一标题最多尝试三次；需要更多重试时可提高此值并重启 |
 | include_kev | true | 新闻之后逐步翻译漏洞目录名称，可关闭 |
 
-正常自动流程默认翻译所有已采集的外文标题：新采集新闻、历史日期新闻和日期未知的条目均会在后续轮次处理，不会因为出现更新日期的新闻而跳过历史。翻译与采集独立运行，每轮完成后等待 60 秒再检查；新闻优先，include_kev=true 时随后补译全部漏洞目录名称。每轮 20 条、每日 200 次的限制仍生效，达到每日额度后下一 UTC 日继续；失败遵循重试间隔及次数上限。
+正常自动流程默认翻译所有已采集的外文标题：新采集新闻、历史日期新闻和日期未知的条目均会在后续轮次处理，不会因为出现更新日期的新闻而跳过历史。翻译与采集独立运行，每轮完成后等待 60 秒再检查；每轮新闻优先，include_kev=true 时随后补译全部漏洞目录名称。默认不设每日请求上限，历史漏洞补译不会用完每日内部额度后阻止新新闻翻译；每轮 20 条、失败重试间隔及次数上限仍生效。GPT 服务商自身的限流、账户额度及按 token 计费不受此设置影响。
+
+从旧版每日 200 次限制升级：更新代码，将 translation.daily_max_requests 设为 0，并在 anquanday_auto/ 内执行 docker compose up -d --build --force-recreate。必须同时更新镜像中的代码，旧版不接受 0；网站端无需重建。升级后即使当天已累计 200 次，下一轮也会继续补译，不需要清除计数或等待次日。已有译文缓存继续复用。若明确配置正整数，新闻和漏洞名称仍共用该上限，达到后下一 UTC 日恢复。
 
 已有服务器若仍使用 scope=latest_day，将 config/service.json 的 translation.scope 改为 all 并重启采集服务即可自动补译，无需清空数据库或译文缓存。Docker 执行 docker compose up -d --force-recreate。可选的 latest_day 模式仍保留，只有明确设置时才按 translation.timezone 限定最新新闻发布日期。
 

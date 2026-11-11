@@ -3,6 +3,7 @@ import socket
 import subprocess
 import sys
 import time
+from datetime import datetime, timezone
 from urllib.request import urlopen
 
 import pytest
@@ -125,6 +126,82 @@ def test_failure_reserves_budget_and_retry_cannot_loop(setup_translation):
     assert run_translation(cfg, fake_provider)["translated"] == 1
     assert store.db.execute("SELECT attempts FROM title_translations").fetchone()[0] == 2
     store.close()
+
+
+def test_unlimited_default_resumes_old_limit_and_prioritizes_new_news(setup_translation):
+    cfg = setup_translation
+    assert cfg["translation"]["daily_max_requests"] == 0
+    cfg["translation"]["max_items_per_run"] = 2
+    store = Store(cfg["data_dir"])
+    budget_key = "translation:requests:" + datetime.now(timezone.utc).date().isoformat()
+    store.set_state(budget_key, 200)
+    for index in range(3):
+        payload = {"dateAdded": "2026-01-01", "vulnerabilityName": "Archived vulnerability " + str(index)}
+        store.db.execute("INSERT INTO kev_records VALUES (?,?,?,?,?)",
+            ("CVE-2026-1000" + str(index), "hash", "now", "now", json.dumps(payload)))
+    store.db.commit()
+    limited = dict(cfg, translation=dict(cfg["translation"], daily_max_requests=200))
+    blocked = run_translation(limited, lambda *args: pytest.fail("daily cap must still work"))
+    assert blocked["status"] == "daily_limit" and blocked["attempted"] == 0
+    calls = []
+    def provider(title, *args):
+        calls.append(title)
+        return fake_provider(title, *args)
+    first = run_translation(cfg, provider)
+    assert first["status"] == "ok" and first["translated"] == 2
+    assert calls[0] == "Company reports breach"
+    assert store.state(budget_key, 0) == 202
+    # News arriving after a KEV batch must be processed before the remaining KEV titles.
+    store.save_article(article(title="New report after the old daily cap",
+        url="https://example.com/new-day", published="2026-11-11"))
+    second = run_translation(cfg, provider)
+    assert second["status"] == "ok" and second["translated"] == 2
+    assert calls[2] == "New report after the old daily cap"
+    assert run_translation(cfg, provider)["translated"] == 1
+    assert run_translation(cfg, provider)["attempted"] == 0
+    assert len(calls) == 5 and store.state(budget_key, 0) == 205
+    store.close()
+
+
+def test_unlimited_mode_keeps_failed_title_attempt_limit(setup_translation):
+    cfg = setup_translation
+    cfg["translation"]["max_attempts"] = 2
+    store = Store(cfg["data_dir"])
+    def broken(*args):
+        raise TranslationError("invalid_chinese_title")
+    assert run_translation(cfg, broken)["failed"] == 1
+    assert run_translation(cfg, broken)["attempted"] == 0
+    store.db.execute("UPDATE title_translations SET retry_after=0")
+    store.db.commit()
+    assert run_translation(cfg, broken)["failed"] == 1
+    store.db.execute("UPDATE title_translations SET retry_after=0")
+    store.db.commit()
+    assert run_translation(cfg, lambda *args: pytest.fail("retry limit reached"))["attempted"] == 0
+    assert store.db.execute("SELECT attempts FROM title_translations").fetchone()[0] == 2
+    store.close()
+
+
+@pytest.mark.parametrize("limit", [None, 0, 200])
+def test_daily_limit_configuration_supports_unlimited_default(setup_translation, tmp_path, limit):
+    cfg = setup_translation
+    if limit is None:
+        cfg["translation"].pop("daily_max_requests")
+    else:
+        cfg["translation"]["daily_max_requests"] = limit
+    path = tmp_path / "service.json"
+    path.write_text(json.dumps(cfg), encoding="utf-8")
+    loaded, _ = load_service(path)
+    assert loaded["translation"]["daily_max_requests"] == (0 if limit is None else limit)
+
+
+@pytest.mark.parametrize("limit", [-1, 10001, True, "0"])
+def test_daily_limit_configuration_rejects_invalid_values(setup_translation, tmp_path, limit):
+    cfg = setup_translation
+    cfg["translation"]["daily_max_requests"] = limit
+    path = tmp_path / "service.json"
+    path.write_text(json.dumps(cfg), encoding="utf-8")
+    with pytest.raises(ValueError, match="translation.daily_max_requests"):
+        load_service(path)
 
 
 def test_lock_prevents_overlapping_translation_workers(setup_translation):

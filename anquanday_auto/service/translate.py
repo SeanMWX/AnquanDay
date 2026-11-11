@@ -104,11 +104,12 @@ def _run(store, settings, key, provider):
             continue
         if result["attempted"] >= settings["max_items_per_run"]:
             break
-        # Reserve budget and attempt BEFORE network I/O. A crash/timeout still counts.
+        # Record every attempt BEFORE network I/O, even without a daily cap.
+        # Zero disables only the daily cap; batch size and retry bounds still apply.
         budget_day = datetime.now(timezone.utc).date().isoformat()
         budget_key = "translation:requests:" + budget_day
         used = store.state(budget_key, 0)
-        if used >= settings["daily_max_requests"]:
+        if settings["daily_max_requests"] > 0 and used >= settings["daily_max_requests"]:
             result["status"] = "daily_limit"
             break
         store.db.execute("INSERT INTO state(key,value) VALUES (?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",

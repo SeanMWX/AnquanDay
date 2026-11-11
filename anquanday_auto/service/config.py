@@ -58,7 +58,7 @@ def load_service(path):
     translation = {
         "enabled": False, "env_file": "../.env", "model": "gpt-4.1-mini",
         "interval_seconds": 60, "request_timeout_seconds": 30,
-        "max_items_per_run": 20, "daily_max_requests": 200,
+        "max_items_per_run": 20, "daily_max_requests": 0,
         "retry_seconds": 3600, "max_attempts": 3, "include_kev": True,
         "scope": "all", "timezone": "Europe/Brussels",
     }
@@ -74,7 +74,7 @@ def load_service(path):
     for key in ("enabled", "include_kev"):
         boolean(translation[key], "translation." + key)
     for key, low, high in (("interval_seconds", 10, 86400), ("request_timeout_seconds", 1, 120),
-            ("max_items_per_run", 1, 100), ("daily_max_requests", 1, 10000),
+            ("max_items_per_run", 1, 100), ("daily_max_requests", 0, 10000),
             ("retry_seconds", 60, 86400), ("max_attempts", 1, 10)):
         integer(translation[key], "translation." + key, low, high)
     if not isinstance(translation["model"], str) or not re.fullmatch(r"[a-zA-Z0-9._:-]{1,100}", translation["model"]):
